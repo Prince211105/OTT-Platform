@@ -78,8 +78,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'myproject_db',
         'USER': 'root',
-        'PASSWORD': 'password',
-        'HOST': '',
+        'PASSWORD': 'Prince@2521',
+        'HOST': 'localhost',
         'PORT': '3306',
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
