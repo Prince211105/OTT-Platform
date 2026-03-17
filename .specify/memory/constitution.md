@@ -1,50 +1,42 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+# OTT Platform Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### 1. Library‑First
+All feature work starts as a self‑contained Python package (library). Libraries must be importable, have their own `pyproject.toml`, and be independently testable.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### 2. CLI Interface
+Every library exposes a command‑line entry point for automation. Standard I/O contracts: `stdin/args → stdout`; errors → `stderr`. JSON output is preferred for machine consumption.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### 3. Test‑First (NON‑NEGOTIABLE)
+All new code must be covered by automated tests **before** implementation. The Red‑Green‑Refactor cycle is enforced; a failing test is required to merge any change.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### 4. Integration Testing
+When a library touches external resources (databases, APIs, file systems) an integration test suite must verify end‑to‑end behavior.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### 5. Observability & Versioning
+- **Logging**: Structured JSON logs at INFO level, DEBUG optional via flag.
+- **Versioning**: Semantic versioning `MAJOR.MINOR.PATCH`. Breaking changes require a migration plan documented in `CHANGELOG.md`.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+### 6. Django Framework
+All web components must be built using Django (>=5.0). Applications are structured as a Django project with a reusable `core` app. Settings should be configurable via environment variables, and the `manage.py` entry point must support standard commands (`runserver`, `migrate`, `createsuperuser`).
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+### 7. UI/UX Consistency
+The admin interface must match the reference UI at `http://18.224.5.135/admin`. Use Django’s admin theming and add custom CSS/JS to replicate layout, colors, and responsive behavior.
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+### 8. Dependency Management
+All Python dependencies are listed in `requirements.txt`. Use the provided `install_dependencies.bat` script to create a virtual environment, upgrade pip, install/upgrade packages to the latest stable versions, and apply any pending migrations. The script must be kept up‑to‑date whenever new packages are added.
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+
+## Additional Constraints
+
+- **Security**: All database credentials must be loaded from environment variables; never hard‑coded.
+- **Performance**: Migration scripts must complete within 2 minutes on a dev machine (see Specification Success Criteria).
+- **Compliance**: Code must pass `ruff` linting and `pytest` test suite with 100 % pass rate before PR merge.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
+- The Constitution supersedes all other project artefacts.
+- Amendments require a dedicated PR, approval from at least two senior maintainers, and an updated `CHANGELOG.md` entry.
+- A `GOVERNANCE.md` file (generated from this section) is included in every release artifact.
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
-
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.1.0 | **Ratified**: 2026‑03‑01 | **Last Amended**: 2026‑03‑17

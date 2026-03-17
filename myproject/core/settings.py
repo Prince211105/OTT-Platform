@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'dashboard',
+    'myproject.ott',
 ]
 
 MIDDLEWARE = [
@@ -76,10 +76,10 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'myproject_db',
+        'NAME': 'ottplatform_db',
         'USER': 'root',
-        'PASSWORD': 'password',
-        'HOST': '',
+        'PASSWORD': 'Prince@2521',
+        'HOST': 'localhost',
         'PORT': '3306',
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
