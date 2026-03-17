@@ -18,6 +18,16 @@ When a library touches external resources (databases, APIs, file systems) an int
 - **Logging**: Structured JSON logs at INFO level, DEBUG optional via flag.
 - **Versioning**: Semantic versioning `MAJOR.MINOR.PATCH`. Breaking changes require a migration plan documented in `CHANGELOG.md`.
 
+### 6. Django Framework
+All web components must be built using Django (>=5.0). Applications are structured as a Django project with a reusable `core` app. Settings should be configurable via environment variables, and the `manage.py` entry point must support standard commands (`runserver`, `migrate`, `createsuperuser`).
+
+### 7. UI/UX Consistency
+The admin interface must match the reference UI at `http://18.224.5.135/admin`. Use Django’s admin theming and add custom CSS/JS to replicate layout, colors, and responsive behavior.
+
+### 8. Dependency Management
+All Python dependencies are listed in `requirements.txt`. Use the provided `install_dependencies.bat` script to create a virtual environment, upgrade pip, install/upgrade packages to the latest stable versions, and apply any pending migrations. The script must be kept up‑to‑date whenever new packages are added.
+
+
 ## Additional Constraints
 
 - **Security**: All database credentials must be loaded from environment variables; never hard‑coded.
@@ -29,4 +39,4 @@ When a library touches external resources (databases, APIs, file systems) an int
 - Amendments require a dedicated PR, approval from at least two senior maintainers, and an updated `CHANGELOG.md` entry.
 - A `GOVERNANCE.md` file (generated from this section) is included in every release artifact.
 
-**Version**: 1.0.0 | **Ratified**: 2026‑03‑01 | **Last Amended**: 2026‑03‑16
+**Version**: 1.1.0 | **Ratified**: 2026‑03‑01 | **Last Amended**: 2026‑03‑17

@@ -1,28 +1,45 @@
-"""Populate dummy data for OTT Platform.
-Creates 10 realistic rows per table (except contents) using SQLAlchemy ORM.
+"""Populate dummy data for OTT Platform using Django ORM.
+Creates sample rows for core tables.
 """
 
+import sys
+import os
 import random
 from datetime import datetime, timedelta
-
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from decimal import Decimal
 from decimal import Decimal
 
-from src.models.models import Base, User, Language, Genre, SubscriptionPlan, UserSubscription, Payment, WatchHistory, Watchlist, ContentRating, HeroSlider, HeroSliderItem, HomeSection, SupportTicket
+# Ensure project root is on sys.path
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+sys.path.append(project_root)
 
-# Adjust the connection URL as needed
-engine = create_engine('mysql+pymysql://root:@localhost:3306/ott_platform')
-Session = sessionmaker(bind=engine)
-session = Session()
+# Django setup
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'myproject.core.settings')
+import django
+
+django.setup()
+
+from myproject.ott.models import (
+    User,
+    Language,
+    Genre,
+    SubscriptionPlan,
+    UserSubscription,
+    Payment,
+    WatchHistory,
+    Watchlist,
+    ContentRating,
+    HeroSlider,
+    HeroSliderItem,
+    HomeSection,
+    SupportTicket,
+)
 
 def random_timestamp():
     return datetime.utcnow() - timedelta(days=random.randint(0, 365))
 
 def create_users():
     for i in range(10):
-        user = User(
+        User.objects.create(
             uuid=f"{i}-{random.randint(1000,9999)}",
             name=f"User {i}",
             email=f"user{i}@example.com",
@@ -36,8 +53,6 @@ def create_users():
             created_at=datetime.utcnow(),
             updated_at=datetime.utcnow(),
         )
-        session.add(user)
-    session.commit()
 
 def create_languages():
     langs = [
@@ -45,55 +60,48 @@ def create_languages():
         ('es', 'Spanish'),
         ('fr', 'French'),
         ('de', 'German'),
-        ('hi', 'Hindi')
+        ('hi', 'Hindi'),
     ]
     for code, name in langs:
-        language = Language(code=code, name=name, is_active=True)
-        session.add(language)
-    session.commit()
+        Language.objects.create(code=code, name=name, is_active=True)
 
 def create_genres():
     for i in range(10):
-        genre = Genre(
+        Genre.objects.create(
             name=f"Genre {i}",
             slug=f"genre-{i}",
             description=f"Description for genre {i}",
             is_active=True,
             display_order=i,
             created_at=datetime.utcnow(),
-            updated_at=datetime.utcnow()
+            updated_at=datetime.utcnow(),
         )
-        session.add(genre)
-    session.commit()
 
 def create_subscription_plans():
     for i in range(3):
-        plan = SubscriptionPlan(
+        SubscriptionPlan.objects.create(
             name=f"Plan {i}",
             slug=f"plan-{i}",
-            price=Decimal('9.99') * (i+1),
+            price=Decimal('9.99') * (i + 1),
             currency='USD',
             billing_cycle='monthly',
             trial_days=14,
             max_screens=2,
             max_quality='1080p',
             allow_download=True,
-            is_popular=bool(i%2),
+            is_popular=bool(i % 2),
             is_active=True,
             sort_order=i,
             created_at=datetime.utcnow(),
-            updated_at=datetime.utcnow()
+            updated_at=datetime.utcnow(),
         )
-        session.add(plan)
-    session.commit()
 
 def main():
-    Base.metadata.create_all(engine)
     create_users()
     create_languages()
     create_genres()
     create_subscription_plans()
-    print('Dummy data inserted.')
+    print('Dummy data inserted via Django ORM.')
 
 if __name__ == '__main__':
     main()

@@ -11,7 +11,7 @@ import sys
 def main():
     # Determine the absolute path to the Alembic config file
     base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-    alembic_cfg = os.path.join(base_dir, "migrations", "alembic.ini")
+    alembic_cfg = os.path.join(os.path.dirname(base_dir), "alembic.ini")
     if not os.path.isfile(alembic_cfg):
         print("Alembic configuration not found at:", alembic_cfg)
         sys.exit(1)
