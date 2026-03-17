@@ -61,6 +61,8 @@ As a system administrator, I want to ensure that referential integrity is enforc
 - **FR-008**: System MUST ensure that monetary fields (`price`, `amount`) use DECIMAL with the correct precision and scale.
 - **FR-009**: System MUST store timestamps (`created_at`, `updated_at`) with `TIMESTAMP` type and default to current time where appropriate.
 - **FR-010**: System MUST provide a migration script (SQL) that can be executed on MySQL 8.0+ without manual edits.
+- **FR-011**: System MUST include a dummy data population script that inserts realistic placeholder records (10 records per table) into all tables except the `contents` table, using column descriptions for value generation.
+- **FR-012**: System MUST enable a content item to be associated with multiple genres via the `content_genre` pivot table, supporting selection of one or more genres per content.
 
 ### Key Entities
 
@@ -85,6 +87,7 @@ As a system administrator, I want to ensure that referential integrity is enforc
 - **SC-004**: The composite index on `contents(content_type, status, popularity_score DESC)` exists and is used by a sample query that filters published content sorted by popularity.
 - **SC-005**: Automated schema verification test suite runs in under 30 seconds on a typical CI environment and reports success.
 - **SC-006**: Documentation of the schema (generated `README.md` in the specs folder) is accessible and accurately reflects the implemented structure.
+- **SC-007**: Dummy data script populates all non‑content tables with 10 records each without errors, and the system validates that a content record can be linked to multiple genres through the `content_genre` table.
 
 ---
 
