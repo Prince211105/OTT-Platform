@@ -1,0 +1,76 @@
+{% extends 'adminlte/base.html' %}
+{% block title %}Tags{% endblock %}
+{% block page_title %}Tags{% endblock %}
+{% block page_subtitle %}Tag List{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Tag Management</h3>
+                <div class="card-tools">
+                    <a href="{% url 'admin_panel:tag_create' %}" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Add New Tag
+                    </a>
+                </div>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Slug</th>
+                            <th>Created</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for tag in tags %}
+                        <tr>
+                            <td>{{ tag.name }}</td>
+                            <td>{{ tag.slug }}</td>
+                            <td>{{ tag.created_at|date:"Y-m-d" }}</td>
+                            <td>
+                                <a href="{% url 'admin_panel:tag_update' tag.pk %}" class="btn btn-sm btn-primary">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                                <a href="{% url 'admin_panel:tag_delete' tag.pk %}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this tag?')">
+                                    <i class="fas fa-trash"></i> Delete
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" class="text-center">No tags found.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer">
+                <div class="d-flex justify-content-between">
+                    <span>Showing {{ tags.start_index|default:0 }} to {{ tags.end_index|default:0 }} of {{ tags.paginator.count }} entries</span>
+                    {% if tags.has_other_pages %}
+                    <ul class="pagination pagination-sm m-0">
+                        {% if tags.has_previous %}
+                        <li class="page-item"><a class="page-link" href="?page={{ tags.previous_page_number }}">«</a></li>
+                        {% endif %}
+                        {% for page in tags.paginator.page_range %}
+                            {% if page >= tags.number|add:-2 and page <= tags.number|add:2 %}
+                            <li class="page-item {% if page == tags.number %}active{% endif %}">
+                                <a class="page-link" href="?page={{ page }}">{{ page }}</a>
+                            </li>
+                            {% endif %}
+                        {% endfor %}
+                        {% if tags.has_next %}
+                        <li class="page-item"><a class="page-link" href="?page={{ tags.next_page_number }}">»</a></li>
+                        {% endif %}
+                    </ul>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

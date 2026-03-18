@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'myproject.ott',
+    'myproject.admin_panel',
+    'django_adminlte3',
+    # AdminLTE static files will be collected via STATICFILES_DIRS
 ]
 
 MIDDLEWARE = [
@@ -75,15 +78,8 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ottplatform_db',
-        'USER': 'root',
-        'PASSWORD': 'Prince@2521',
-        'HOST': 'localhost',
-        'PORT': '3306',
-        'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-        },
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -122,4 +118,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+# Directory where static files will be collected
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+# Additional directories for static files (e.g., AdminLTE assets)
+import os, adminlte3
+ADMINLTE_STATIC = os.path.join(os.path.dirname(adminlte3.__file__), 'static')
+STATICFILES_DIRS = [
+    ADMINLTE_STATIC,
+]
+# STATIC_ROOT already defined above

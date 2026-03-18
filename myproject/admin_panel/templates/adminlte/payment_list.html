@@ -1,0 +1,86 @@
+{% extends 'adminlte/base.html' %}
+{% block title %}Payments{% endblock %}
+{% block page_title %}Payments{% endblock %}
+{% block page_subtitle %}Payment List{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Payment Management</h3>
+                <div class="card-tools">
+                    <a href="{% url 'admin_panel:payment_create' %}" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Add New Payment
+                    </a>
+                </div>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Plan</th>
+                            <th>Amount</th>
+                            <th>Gateway</th>
+                            <th>Status</th>
+                            <th>Paid At</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for payment in payments %}
+                        <tr>
+                            <td>{{ payment.user.name }}</td>
+                            <td>{{ payment.plan.name }}</td>
+                            <td>{{ payment.currency }}{{ payment.price }}</td>
+                            <td>{{ payment.get_gateway_display }}</td>
+                            <td>
+                                <span class="badge {% if payment.status == 'paid' %}bg-success{% elif payment.status == 'pending' %}bg-warning{% elif payment.status == 'failed' %}bg-danger{% else %}bg-secondary{% endif %}">
+                                    {{ payment.get_status_display }}
+                                </span>
+                            </td>
+                            <td>{{ payment.paid_at|date:"Y-m-d H:i" }}</td>
+                            <td>
+                                <a href="{% url 'admin_panel:payment_update' payment.pk %}" class="btn btn-sm btn-primary">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                                <a href="{% url 'admin_panel:payment_delete' payment.pk %}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this payment?')">
+                                    <i class="fas fa-trash"></i> Delete
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="7" class="text-center">No payments found.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer">
+                <div class="d-flex justify-content-between">
+                    <span>Showing {{ payments.start_index|default:0 }} to {{ payments.end_index|default:0 }} of {{ payments.paginator.count }} entries</span>
+                    {% if payments.has_other_pages %}
+                    <ul class="pagination pagination-sm m-0">
+                        {% if payments.has_previous %}
+                        <li class="page-item"><a class="page-link" href="?page={{ payments.previous_page_number }}">«</a></li>
+                        {% endif %}
+                        {% for page in payments.paginator.page_range %}
+                            {% if page >= payments.number|add:-2 and page <= payments.number|add:2 %}
+                            <li class="page-item {% if page == payments.number %}active{% endif %}">
+                                <a class="page-link" href="?page={{ page }}">{{ page }}</a>
+                            </li>
+                            {% endif %}
+                        {% endfor %}
+                        {% if payments.has_next %}
+                        <li class="page-item"><a class="page-link" href="?page={{ payments.next_page_number }}">»</a></li>
+                        {% endif %}
+                    </ul>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

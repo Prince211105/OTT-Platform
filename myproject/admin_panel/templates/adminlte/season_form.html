@@ -1,0 +1,103 @@
+{% extends 'adminlte/base.html' %}
+{% block title %}Season Form{% endblock %}
+{% block page_title %}Season{% endblock %}
+{% block page_subtitle %}{% if object %}Edit{% else %}Create{% endif %} Season{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">{% if object %}Edit{% else %}Create{% endif %} Season</h3>
+            </div>
+            <form method="post">
+                {% csrf_token %}
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.content.id_for_label }}">Content *</label>
+                                {{ form.content }}
+                                {% if form.content.errors %}
+                                <div class="text-danger">{{ form.content.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.season_number.id_for_label }}">Season Number *</label>
+                                {{ form.season_number }}
+                                {% if form.season_number.errors %}
+                                <div class="text-danger">{{ form.season_number.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.title.id_for_label }}">Title</label>
+                                {{ form.title }}
+                                {% if form.title.errors %}
+                                <div class="text-danger">{{ form.title.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.release_year.id_for_label }}">Release Year</label>
+                                {{ form.release_year }}
+                                {% if form.release_year.errors %}
+                                <div class="text-danger">{{ form.release_year.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.thumbnail.id_for_label }}">Thumbnail URL</label>
+                                {{ form.thumbnail }}
+                                {% if form.thumbnail.errors %}
+                                <div class="text-danger">{{ form.thumbnail.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.episode_count.id_for_label }}">Episode Count *</label>
+                                {{ form.episode_count }}
+                                {% if form.episode_count.errors %}
+                                <div class="text-danger">{{ form.episode_count.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="{{ form.description.id_for_label }}">Description</label>
+                        {{ form.description }}
+                        {% if form.description.errors %}
+                        <div class="text-danger">{{ form.description.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="{{ form.status.id_for_label }}">Status *</label>
+                        {{ form.status }}
+                        {% if form.status.errors %}
+                        <div class="text-danger">{{ form.status.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'admin_panel:season_list' %}" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary float-right">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

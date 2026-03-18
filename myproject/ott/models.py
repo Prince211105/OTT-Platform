@@ -161,8 +161,17 @@ class Content(models.Model):
     is_featured = models.BooleanField(default=False)
     is_free = models.BooleanField(default=False)
     status = models.CharField(max_length=20, choices=ContentStatus.choices)
+    # Publish toggle and optional schedule for content
+    is_published = models.BooleanField(default=False)
+    schedule_at = models.DateTimeField(null=True, blank=True)
     meta_title = models.CharField(max_length=255, null=True, blank=True)
     meta_description = models.CharField(max_length=500, null=True, blank=True)
+    # Video asset fields for transcoding
+    video_url = models.CharField(max_length=255, null=True, blank=True)
+    video_360p_url = models.CharField(max_length=255, null=True, blank=True)
+    video_720p_url = models.CharField(max_length=255, null=True, blank=True)
+    video_1080p_url = models.CharField(max_length=255, null=True, blank=True)
+    video_4k_url = models.CharField(max_length=255, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     deleted_at = models.DateTimeField(null=True, blank=True)

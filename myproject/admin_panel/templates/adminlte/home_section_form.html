@@ -1,0 +1,96 @@
+{% extends 'adminlte/base.html' %}
+{% block title %}Home Section Form{% endblock %}
+{% block page_title %}Home Section{% endblock %}
+{% block page_subtitle %}{% if object %}Edit{% else %}Create{% endif %} Home Section{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">{% if object %}Edit{% else %}Create{% endif %} Home Section</h3>
+            </div>
+            <form method="post">
+                {% csrf_token %}
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.title.id_for_label }}">Title *</label>
+                                {{ form.title }}
+                                {% if form.title.errors %}
+                                <div class="text-danger">{{ form.title.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.section_type.id_for_label }}">Section Type *</label>
+                                {{ form.section_type }}
+                                {% if form.section_type.errors %}
+                                <div class="text-danger">{{ form.section_type.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.genre.id_for_label }}">Genre</label>
+                                {{ form.genre }}
+                                {% if form.genre.errors %}
+                                <div class="text-danger">{{ form.genre.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.content_limit.id_for_label }}">Content Limit *</label>
+                                {{ form.content_limit }}
+                                {% if form.content_limit.errors %}
+                                <div class="text-danger">{{ form.content_limit.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.sort_by.id_for_label }}">Sort By</label>
+                                {{ form.sort_by }}
+                                {% if form.sort_by.errors %}
+                                <div class="text-danger">{{ form.sort_by.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.display_order.id_for_label }}">Display Order *</label>
+                                {{ form.display_order }}
+                                {% if form.display_order.errors %}
+                                <div class="text-danger">{{ form.display_order.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="form-check">
+                            {{ form.is_active }}
+                            <label class="form-check-label" for="{{ form.is_active.id_for_label }}">
+                                Is Active
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'admin_panel:home_section_list' %}" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary float-right">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

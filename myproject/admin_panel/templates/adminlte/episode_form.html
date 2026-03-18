@@ -1,0 +1,179 @@
+{% extends 'adminlte/base.html' %}
+{% block title %}Episode Form{% endblock %}
+{% block page_title %}Episode{% endblock %}
+{% block page_subtitle %}{% if object %}Edit{% else %}Create{% endif %} Episode{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">{% if object %}Edit{% else %}Create{% endif %} Episode</h3>
+            </div>
+            <form method="post">
+                {% csrf_token %}
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.content.id_for_label }}">Content *</label>
+                                {{ form.content }}
+                                {% if form.content.errors %}
+                                <div class="text-danger">{{ form.content.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.season.id_for_label }}">Season *</label>
+                                {{ form.season }}
+                                {% if form.season.errors %}
+                                <div class="text-danger">{{ form.season.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.episode_number.id_for_label }}">Episode Number *</label>
+                                {{ form.episode_number }}
+                                {% if form.episode_number.errors %}
+                                <div class="text-danger">{{ form.episode_number.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.title.id_for_label }}">Title *</label>
+                                {{ form.title }}
+                                {% if form.title.errors %}
+                                <div class="text-danger">{{ form.title.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.duration_minutes.id_for_label }}">Duration (minutes) *</label>
+                                {{ form.duration_minutes }}
+                                {% if form.duration_minutes.errors %}
+                                <div class="text-danger">{{ form.duration_minutes.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.release_date.id_for_label }}">Release Date</label>
+                                {{ form.release_date }}
+                                {% if form.release_date.errors %}
+                                <div class="text-danger">{{ form.release_date.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="{{ form.description.id_for_label }}">Description</label>
+                        {{ form.description }}
+                        {% if form.description.errors %}
+                        <div class="text-danger">{{ form.description.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.thumbnail.id_for_label }}">Thumbnail URL</label>
+                                {{ form.thumbnail }}
+                                {% if form.thumbnail.errors %}
+                                <div class="text-danger">{{ form.thumbnail.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.video_url.id_for_label }}">Video URL *</label>
+                                {{ form.video_url }}
+                                {% if form.video_url.errors %}
+                                <div class="text-danger">{{ form.video_url.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.video_360p_url.id_for_label }}">Video 360p URL</label>
+                                {{ form.video_360p_url }}
+                                {% if form.video_360p_url.errors %}
+                                <div class="text-danger">{{ form.video_360p_url.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.video_720p_url.id_for_label }}">Video 720p URL</label>
+                                {{ form.video_720p_url }}
+                                {% if form.video_720p_url.errors %}
+                                <div class="text-danger">{{ form.video_720p_url.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.video_1080p_url.id_for_label }}">Video 1080p URL</label>
+                                {{ form.video_1080p_url }}
+                                {% if form.video_1080p_url.errors %}
+                                <div class="text-danger">{{ form.video_1080p_url.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.video_4k_url.id_for_label }}">Video 4K URL</label>
+                                {{ form.video_4k_url }}
+                                {% if form.video_4k_url.errors %}
+                                <div class="text-danger">{{ form.video_4k_url.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.subtitle_url.id_for_label }}">Subtitle URL</label>
+                                {{ form.subtitle_url }}
+                                {% if form.subtitle_url.errors %}
+                                <div class="text-danger">{{ form.subtitle_url.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.status.id_for_label }}">Status *</label>
+                                {{ form.status }}
+                                {% if form.status.errors %}
+                                <div class="text-danger">{{ form.status.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'admin_panel:episode_list' %}" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary float-right">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

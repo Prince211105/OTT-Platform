@@ -1,0 +1,27 @@
+{% extends 'adminlte/base.html' %}
+{% block title %}Delete Support Ticket{% endblock %}
+{% block page_title %}Support Ticket{% endblock %}
+{% block page_subtitle %}Delete Support Ticket{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card card-danger">
+            <div class="card-header">
+                <h3 class="card-title">Confirm Delete</h3>
+            </div>
+            <div class="card-body">
+                <p>Are you sure you want to delete the support ticket "<strong>{{ object.subject }}</strong>"?</p>
+                <p class="text-danger"><i class="fas fa-exclamation-triangle"></i> This action cannot be undone.</p>
+            </div>
+            <div class="card-footer">
+                <form method="post">
+                    {% csrf_token %}
+                    <a href="{% url 'admin_panel:support_ticket_list' %}" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-danger float-right">Confirm Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

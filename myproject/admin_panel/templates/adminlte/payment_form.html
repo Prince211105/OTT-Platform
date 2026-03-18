@@ -1,0 +1,137 @@
+{% extends 'adminlte/base.html' %}
+{% block title %}Payment Form{% endblock %}
+{% block page_title %}Payment{% endblock %}
+{% block page_subtitle %}{% if object %}Edit{% else %}Create{% endif %} Payment{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">{% if object %}Edit{% else %}Create{% endif %} Payment</h3>
+            </div>
+            <form method="post">
+                {% csrf_token %}
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.user.id_for_label }}">User *</label>
+                                {{ form.user }}
+                                {% if form.user.errors %}
+                                <div class="text-danger">{{ form.user.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.plan.id_for_label }}">Plan *</label>
+                                {{ form.plan }}
+                                {% if form.plan.errors %}
+                                <div class="text-danger">{{ form.plan.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.subscription.id_for_label }}">Subscription</label>
+                                {{ form.subscription }}
+                                {% if form.subscription.errors %}
+                                <div class="text-danger">{{ form.subscription.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.gateway.id_for_label }}">Gateway *</label>
+                                {{ form.gateway }}
+                                {% if form.gateway.errors %}
+                                <div class="text-danger">{{ form.gateway.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.gateway_order_id.id_for_label }}">Gateway Order ID</label>
+                                {{ form.gateway_order_id }}
+                                {% if form.gateway_order_id.errors %}
+                                <div class="text-danger">{{ form.gateway_order_id.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.gateway_payment_id.id_for_label }}">Gateway Payment ID</label>
+                                {{ form.gateway_payment_id }}
+                                {% if form.gateway_payment_id.errors %}
+                                <div class="text-danger">{{ form.gateway_payment_id.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.amount.id_for_label }}">Amount *</label>
+                                {{ form.amount }}
+                                {% if form.amount.errors %}
+                                <div class="text-danger">{{ form.amount.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.currency.id_for_label }}">Currency *</label>
+                                {{ form.currency }}
+                                {% if form.currency.errors %}
+                                <div class="text-danger">{{ form.currency.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.status.id_for_label }}">Status *</label>
+                                {{ form.status }}
+                                {% if form.status.errors %}
+                                <div class="text-danger">{{ form.status.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.paid_at.id_for_label }}">Paid At</label>
+                                {{ form.paid_at }}
+                                {% if form.paid_at.errors %}
+                                <div class="text-danger">{{ form.paid_at.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="{{ form.metadata.id_for_label }}">Metadata</label>
+                        {{ form.metadata }}
+                        {% if form.metadata.errors %}
+                        <div class="text-danger">{{ form.metadata.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'admin_panel:payment_list' %}" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary float-right">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

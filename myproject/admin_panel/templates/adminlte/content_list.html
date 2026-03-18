@@ -1,0 +1,121 @@
+{% extends 'adminlte/base.html' %}
+{% block title %}Contents{% endblock %}
+{% block page_title %}Contents{% endblock %}
+{% block page_subtitle %}Content Management{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h3 class="card-title"><i class="fas fa-film mr-2"></i>Content Management</h3>
+                    <a href="{% url 'admin_panel:content_create' %}" class="btn btn-primary">
+                        <i class="fas fa-plus mr-1"></i> Add Content
+                    </a>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Title</th>
+                                <th>Type</th>
+                                <th>Rating</th>
+                                <th>Status</th>
+                                <th>Release Year</th>
+                                <th>View Count</th>
+                                <th>Featured</th>
+                                <th>Free</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for content in contents %}
+                            <tr>
+                                <td>
+                                    <strong>{{ content.title }}</strong>
+                                    <br><small class="text-muted">{{ content.slug }}</small>
+                                </td>
+                                <td>
+                                    <span class="badge bg-info">{{ content.get_content_type_display }}</span>
+                                </td>
+                                <td>{{ content.get_rating_display|default:"-" }}</td>
+                                <td>
+                                    <span class="badge {% if content.status == 'published' %}bg-success{% elif content.status == 'draft' %}bg-secondary{% elif content.status == 'archived' %}bg-dark{% else %}bg-warning{% endif %}">
+                                        {{ content.get_status_display }}
+                                    </span>
+                                </td>
+                                <td>{{ content.release_year|default:"-" }}</td>
+                                <td>{{ content.view_count }}</td>
+                                <td>
+                                    {% if content.is_featured %}
+                                    <i class="fas fa-star text-warning" title="Featured"></i>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if content.is_free %}
+                                    <i class="fas fa-free-code-camp text-success" title="Free"></i>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <a href="{% url 'admin_panel:content_update' content.pk %}" class="btn btn-sm btn-primary" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a href="{% url 'admin_panel:content_delete' content.pk %}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this content?')" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="9" class="text-center py-4">
+                                    <div class="alert alert-info">
+                                        <i class="fas fa-info-circle mr-2"></i>No contents found. <a href="{% url 'admin_panel:content_create' %}" class="alert-link">Add your first content</a>.
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="text-muted">Showing {{ contents.start_index|default:0 }} to {{ contents.end_index|default:0 }} of {{ contents.paginator.count }} entries</span>
+                    {% if contents.has_other_pages %}
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination pagination-sm m-0">
+                            {% if contents.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ contents.previous_page_number }}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            {% endif %}
+                            {% for page in contents.paginator.page_range %}
+                                {% if page >= contents.number|add:-2 and page <= contents.number|add:2 %}
+                                <li class="page-item {% if page == contents.number %}active{% endif %}">
+                                    <a class="page-link" href="?page={{ page }}">{{ page }}</a>
+                                </li>
+                                {% endif %}
+                            {% endfor %}
+                            {% if contents.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ contents.next_page_number }}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

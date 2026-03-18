@@ -1,0 +1,285 @@
+{% extends 'adminlte/base.html' %}
+{% block title %}Content Form{% endblock %}
+{% block page_title %}Content{% endblock %}
+{% block page_subtitle %}{% if object %}Edit{% else %}Create{% endif %} Content{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card card-primary card-outline">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-film mr-2"></i>
+                    {% if object %}Edit{% else %}Create{% endif %} Content
+                </h3>
+                <div class="card-tools">
+                    <a href="{% url 'admin_panel:content_list' %}" class="btn btn-sm btn-secondary">
+                        <i class="fas fa-arrow-left mr-1"></i> Back to List
+                    </a>
+                </div>
+            </div>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.title.id_for_label }}" class="form-label">
+                                    <i class="fas fa-star text-danger"></i> Title
+                                </label>
+                                {{ form.title }}
+                                {% if form.title.errors %}
+                                <div class="text-danger small">{{ form.title.errors }}</div>
+                                {% endif %}
+                                <small class="form-text text-muted">Enter the content title</small>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.slug.id_for_label }}" class="form-label">
+                                    <i class="fas fa-star text-danger"></i> Slug
+                                </label>
+                                {{ form.slug }}
+                                {% if form.slug.errors %}
+                                <div class="text-danger small">{{ form.slug.errors }}</div>
+                                {% endif %}
+                                <small class="form-text text-muted">URL-friendly identifier</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="{{ form.content_type.id_for_label }}" class="form-label">
+                                    <i class="fas fa-star text-danger"></i> Content Type
+                                </label>
+                                {{ form.content_type }}
+                                {% if form.content_type.errors %}
+                                <div class="text-danger small">{{ form.content_type.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="{{ form.rating.id_for_label }}" class="form-label">Rating</label>
+                                {{ form.rating }}
+                                {% if form.rating.errors %}
+                                <div class="text-danger small">{{ form.rating.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="{{ form.status.id_for_label }}" class="form-label">
+                                    <i class="fas fa-star text-danger"></i> Status
+                                </label>
+                                {{ form.status }}
+                                {% if form.status.errors %}
+                                <div class="text-danger small">{{ form.status.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="{{ form.description.id_for_label }}" class="form-label">Description</label>
+                        {{ form.description }}
+                        {% if form.description.errors %}
+                        <div class="text-danger small">{{ form.description.errors }}</div>
+                        {% endif %}
+                        <small class="form-text text-muted">Full content description</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="{{ form.short_description.id_for_label }}" class="form-label">Short Description</label>
+                        {{ form.short_description }}
+                        {% if form.short_description.errors %}
+                        <div class="text-danger small">{{ form.short_description.errors }}</div>
+                        {% endif %}
+                        <small class="form-text text-muted">Brief summary (max 500 characters)</small>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="{{ form.release_year.id_for_label }}" class="form-label">Release Year</label>
+                                {{ form.release_year }}
+                                {% if form.release_year.errors %}
+                                <div class="text-danger small">{{ form.release_year.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="{{ form.release_date.id_for_label }}" class="form-label">Release Date</label>
+                                {{ form.release_date }}
+                                {% if form.release_date.errors %}
+                                <div class="text-danger small">{{ form.release_date.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="{{ form.duration_minutes.id_for_label }}" class="form-label">Duration (minutes)</label>
+                                {{ form.duration_minutes }}
+                                {% if form.duration_minutes.errors %}
+                                <div class="text-danger small">{{ form.duration_minutes.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="{{ form.language.id_for_label }}" class="form-label">Language</label>
+                                {{ form.language }}
+                                {% if form.language.errors %}
+                                <div class="text-danger small">{{ form.language.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="{{ form.country.id_for_label }}" class="form-label">Country</label>
+                                {{ form.country }}
+                                {% if form.country.errors %}
+                                <div class="text-danger small">{{ form.country.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="{{ form.imdb_rating.id_for_label }}" class="form-label">IMDB Rating</label>
+                                {{ form.imdb_rating }}
+                                {% if form.imdb_rating.errors %}
+                                <div class="text-danger small">{{ form.imdb_rating.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="{{ form.platform_rating.id_for_label }}" class="form-label">Platform Rating</label>
+                                {{ form.platform_rating }}
+                                {% if form.platform_rating.errors %}
+                                <div class="text-danger small">{{ form.platform_rating.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.thumbnail.id_for_label }}" class="form-label">Thumbnail URL</label>
+                                {{ form.thumbnail }}
+                                {% if form.thumbnail.errors %}
+                                <div class="text-danger small">{{ form.thumbnail.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.poster.id_for_label }}" class="form-label">Poster URL</label>
+                                {{ form.poster }}
+                                {% if form.poster.errors %}
+                                <div class="text-danger small">{{ form.poster.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.banner.id_for_label }}" class="form-label">Banner URL</label>
+                                {{ form.banner }}
+                                {% if form.banner.errors %}
+                                <div class="text-danger small">{{ form.banner.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.trailer_url.id_for_label }}" class="form-label">Trailer URL</label>
+                                {{ form.trailer_url }}
+                                {% if form.trailer_url.errors %}
+                                <div class="text-danger small">{{ form.trailer_url.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="{{ form.meta_title.id_for_label }}" class="form-label">Meta Title</label>
+                        {{ form.meta_title }}
+                        {% if form.meta_title.errors %}
+                        <div class="text-danger small">{{ form.meta_title.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="{{ form.meta_description.id_for_label }}" class="form-label">Meta Description</label>
+                        {{ form.meta_description }}
+                        {% if form.meta_description.errors %}
+                        <div class="text-danger small">{{ form.meta_description.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="form-check">
+                                    {{ form.is_featured }}
+                                    <label class="form-check-label" for="{{ form.is_featured.id_for_label }}">
+                                        <i class="fas fa-star text-warning"></i> Featured Content
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="form-check">
+                                    {{ form.is_free }}
+                                    <label class="form-check-label" for="{{ form.is_free.id_for_label }}">
+                                        <i class="fas fa-free-code-camp text-success"></i> Free Content
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="{{ form.genre.id_for_label }}" class="form-label">Genres</label>
+                        {{ form.genre }}
+                        {% if form.genre.errors %}
+                        <div class="text-danger small">{{ form.genre.errors }}</div>
+                        {% endif %}
+                        <small class="form-text text-muted">Select applicable genres</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="{{ form.tag.id_for_label }}" class="form-label">Tags</label>
+                        {{ form.tag }}
+                        {% if form.tag.errors %}
+                        <div class="text-danger small">{{ form.tag.errors }}</div>
+                        {% endif %}
+                        <small class="form-text text-muted">Select applicable tags</small>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'admin_panel:content_list' %}" class="btn btn-secondary">
+                            <i class="fas fa-times mr-1"></i> Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save mr-1"></i> Save
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
