@@ -1,82 +1,137 @@
 {% extends 'adminlte/base.html' %}
 {% block title %}Seasons{% endblock %}
 {% block page_title %}Seasons{% endblock %}
-{% block page_subtitle %}Season List{% endblock %}
+{% block page_subtitle %}Season Management{% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Season Management</h3>
-                <div class="card-tools">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h3 class="card-title">
+                        <i class="fas fa-layer-group mr-2 text-primary"></i>Season Management
+                    </h3>
                     <a href="{% url 'admin_panel:season_create' %}" class="btn btn-primary">
-                        <i class="fas fa-plus"></i> Add New Season
+                        <i class="fas fa-plus mr-1"></i> Add Season
                     </a>
                 </div>
             </div>
             <div class="card-body">
-                <table class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th>Content</th>
-                            <th>Season Number</th>
-                            <th>Title</th>
-                            <th>Release Year</th>
-                            <th>Episode Count</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for season in seasons %}
-                        <tr>
-                            <td>{{ season.content.title }}</td>
-                            <td>Season {{ season.season_number }}</td>
-                            <td>{{ season.title|default:"-" }}</td>
-                            <td>{{ season.release_year|default:"-" }}</td>
-                            <td>{{ season.episode_count }}</td>
-                            <td>
-                                <span class="badge {% if season.status == 'published' %}bg-success{% elif season.status == 'draft' %}bg-secondary{% else %}bg-dark{% endif %}">
-                                    {{ season.get_status_display }}
-                                </span>
-                            </td>
-                            <td>
-                                <a href="{% url 'admin_panel:season_update' season.pk %}" class="btn btn-sm btn-primary">
-                                    <i class="fas fa-edit"></i> Edit
-                                </a>
-                                <a href="{% url 'admin_panel:season_delete' season.pk %}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this season?')">
-                                    <i class="fas fa-trash"></i> Delete
-                                </a>
-                            </td>
-                        </tr>
-                        {% empty %}
-                        <tr>
-                            <td colspan="7" class="text-center">No seasons found.</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th style="width: 20%;">Content</th>
+                                <th style="width: 10%;">Season</th>
+                                <th style="width: 20%;">Title</th>
+                                <th style="width: 10%;">Year</th>
+                                <th style="width: 10%;">Episodes</th>
+                                <th style="width: 10%;">Status</th>
+                                <th style="width: 20%;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for season in seasons %}
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-grow-1">
+                                            <strong class="text-primary" style="font-size: 0.9375rem;">
+                                                {{ season.content.title }}
+                                            </strong>
+                                            <br>
+                                            <small class="text-muted" style="font-size: 0.8125rem;">
+                                                {{ season.content.slug }}
+                                            </small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge bg-primary" style="font-size: 0.75rem; padding: 4px 10px;">
+                                        Season {{ season.season_number }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="text-secondary" style="font-size: 0.875rem;">
+                                        {{ season.title|default:"-" }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="text-secondary" style="font-size: 0.875rem;">
+                                        {{ season.release_year|default:"-" }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="text-secondary" style="font-size: 0.875rem;">
+                                        {{ season.episode_count }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="badge {% if season.status == 'published' %}bg-success{% elif season.status == 'draft' %}bg-secondary{% else %}bg-dark{% endif %}" style="font-size: 0.75rem; padding: 4px 10px;">
+                                        {{ season.get_status_display }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <a href="{% url 'admin_panel:season_update' season.pk %}" class="btn btn-sm btn-primary" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a href="{% url 'admin_panel:season_delete' season.pk %}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this season?')" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="7" class="text-center py-5">
+                                    <div class="empty-state">
+                                        <i class="fas fa-layer-group"></i>
+                                        <h4>No Seasons Found</h4>
+                                        <p>Get started by creating your first season.</p>
+                                        <a href="{% url 'admin_panel:season_create' %}" class="btn btn-primary">
+                                            <i class="fas fa-plus mr-1"></i> Add Your First Season
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <div class="card-footer">
-                <div class="d-flex justify-content-between">
-                    <span>Showing {{ seasons.start_index|default:0 }} to {{ seasons.end_index|default:0 }} of {{ seasons.paginator.count }} entries</span>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="text-muted" style="font-size: 0.875rem;">
+                        Showing {{ seasons.start_index|default:0 }} to {{ seasons.end_index|default:0 }} of {{ seasons.paginator.count }} entries
+                    </span>
                     {% if seasons.has_other_pages %}
-                    <ul class="pagination pagination-sm m-0">
-                        {% if seasons.has_previous %}
-                        <li class="page-item"><a class="page-link" href="?page={{ seasons.previous_page_number }}">«</a></li>
-                        {% endif %}
-                        {% for page in seasons.paginator.page_range %}
-                            {% if page >= seasons.number|add:-2 and page <= seasons.number|add:2 %}
-                            <li class="page-item {% if page == seasons.number %}active{% endif %}">
-                                <a class="page-link" href="?page={{ page }}">{{ page }}</a>
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination pagination-sm m-0">
+                            {% if seasons.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ seasons.previous_page_number }}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
                             </li>
                             {% endif %}
-                        {% endfor %}
-                        {% if seasons.has_next %}
-                        <li class="page-item"><a class="page-link" href="?page={{ seasons.next_page_number }}">»</a></li>
-                        {% endif %}
-                    </ul>
+                            {% for page in seasons.paginator.page_range %}
+                                {% if page >= seasons.number|add:-2 and page <= seasons.number|add:2 %}
+                                <li class="page-item {% if page == seasons.number %}active{% endif %}">
+                                    <a class="page-link" href="?page={{ page }}">{{ page }}</a>
+                                </li>
+                                {% endif %}
+                            {% endfor %}
+                            {% if seasons.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ seasons.next_page_number }}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
                     {% endif %}
                 </div>
             </div>

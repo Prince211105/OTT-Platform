@@ -6,95 +6,169 @@
 {% block content %}
 <div class="row">
     <div class="col-12">
-        <div class="card card-primary">
-            <div class="card-header">
-                <h3 class="card-title">{% if object %}Edit{% else %}Create{% endif %} Season</h3>
+        <div class="form-card">
+            <!-- Form Header -->
+            <div class="form-header">
+                <h2>
+                    <i class="fas fa-tv"></i>
+                    {% if object %}Edit{% else %}Create{% endif %} Season
+                </h2>
+                <div class="form-actions">
+                    <a href="{% url 'admin_panel:season_list' %}" class="btn-form btn-form-secondary">
+                        <i class="fas fa-arrow-left"></i> Back to List
+                    </a>
+                </div>
             </div>
-            <form method="post">
+
+            <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                <div class="card-body">
-                    <div class="row">
+                
+                <!-- Form Body -->
+                <div class="form-body">
+                    
+                    <!-- Row 1: Content and Season Number -->
+                    <div class="form-row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="{{ form.content.id_for_label }}">Content *</label>
+                                <label for="{{ form.content.id_for_label }}" class="form-label required">
+                                    <i class="fas fa-asterisk"></i> Content
+                                </label>
                                 {{ form.content }}
                                 {% if form.content.errors %}
-                                <div class="text-danger">{{ form.content.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.content.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">Select the content this season belongs to</small>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="{{ form.season_number.id_for_label }}">Season Number *</label>
+                                <label for="{{ form.season_number.id_for_label }}" class="form-label required">
+                                    <i class="fas fa-asterisk"></i> Season Number
+                                </label>
                                 {{ form.season_number }}
                                 {% if form.season_number.errors %}
-                                <div class="text-danger">{{ form.season_number.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.season_number.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">Season number (e.g., 1, 2, 3)</small>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="row">
+                    <!-- Row 2: Title and Release Year -->
+                    <div class="form-row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="{{ form.title.id_for_label }}">Title</label>
+                                <label for="{{ form.title.id_for_label }}" class="form-label">
+                                    <i class="fas fa-heading"></i> Title
+                                </label>
                                 {{ form.title }}
                                 {% if form.title.errors %}
-                                <div class="text-danger">{{ form.title.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.title.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">Season title</small>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="{{ form.release_year.id_for_label }}">Release Year</label>
+                                <label for="{{ form.release_year.id_for_label }}" class="form-label">
+                                    <i class="fas fa-calendar-alt"></i> Release Year
+                                </label>
                                 {{ form.release_year }}
                                 {% if form.release_year.errors %}
-                                <div class="text-danger">{{ form.release_year.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.release_year.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">Year the season was released</small>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="row">
+                    <!-- Row 3: Thumbnail and Episode Count -->
+                    <div class="form-row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="{{ form.thumbnail.id_for_label }}">Thumbnail URL</label>
+                                <label for="{{ form.thumbnail.id_for_label }}" class="form-label">
+                                    <i class="fas fa-image"></i> Thumbnail URL
+                                </label>
                                 {{ form.thumbnail }}
                                 {% if form.thumbnail.errors %}
-                                <div class="text-danger">{{ form.thumbnail.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.thumbnail.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">URL to the season thumbnail</small>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="{{ form.episode_count.id_for_label }}">Episode Count *</label>
+                                <label for="{{ form.episode_count.id_for_label }}" class="form-label required">
+                                    <i class="fas fa-asterisk"></i> Episode Count
+                                </label>
                                 {{ form.episode_count }}
                                 {% if form.episode_count.errors %}
-                                <div class="text-danger">{{ form.episode_count.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.episode_count.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">Number of episodes in this season</small>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="{{ form.description.id_for_label }}">Description</label>
-                        {{ form.description }}
-                        {% if form.description.errors %}
-                        <div class="text-danger">{{ form.description.errors }}</div>
-                        {% endif %}
+                    <!-- Row 4: Description (full width) -->
+                    <div class="form-row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="{{ form.description.id_for_label }}" class="form-label">
+                                    <i class="fas fa-align-left"></i> Description
+                                </label>
+                                {{ form.description }}
+                                {% if form.description.errors %}
+                                <div class="form-error">
+                                    {{ form.description.errors }}
+                                </div>
+                                {% endif %}
+                                <small class="form-text">Brief description of the season</small>
+                            </div>
+                        </div>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="{{ form.status.id_for_label }}">Status *</label>
-                        {{ form.status }}
-                        {% if form.status.errors %}
-                        <div class="text-danger">{{ form.status.errors }}</div>
-                        {% endif %}
+                    <!-- Row 5: Status -->
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.status.id_for_label }}" class="form-label required">
+                                    <i class="fas fa-asterisk"></i> Status
+                                </label>
+                                {{ form.status }}
+                                {% if form.status.errors %}
+                                <div class="form-error">
+                                    {{ form.status.errors }}
+                                </div>
+                                {% endif %}
+                                <small class="form-text">Season status</small>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="card-footer">
-                    <a href="{% url 'admin_panel:season_list' %}" class="btn btn-secondary">Cancel</a>
-                    <button type="submit" class="btn btn-primary float-right">Save</button>
+
+                <!-- Form Footer -->
+                <div class="form-footer">
+                    <div class="form-actions">
+                        <a href="{% url 'admin_panel:season_list' %}" class="btn-form btn-form-secondary">
+                            <i class="fas fa-times"></i> Cancel
+                        </a>
+                        <button type="submit" class="btn-form btn-form-primary">
+                            <i class="fas fa-save"></i> Save Season
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>

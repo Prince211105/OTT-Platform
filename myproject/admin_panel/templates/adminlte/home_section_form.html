@@ -6,88 +6,148 @@
 {% block content %}
 <div class="row">
     <div class="col-12">
-        <div class="card card-primary">
-            <div class="card-header">
-                <h3 class="card-title">{% if object %}Edit{% else %}Create{% endif %} Home Section</h3>
+        <div class="form-card">
+            <!-- Form Header -->
+            <div class="form-header">
+                <h2>
+                    <i class="fas fa-th"></i>
+                    {% if object %}Edit{% else %}Create{% endif %} Home Section
+                </h2>
+                <div class="form-actions">
+                    <a href="{% url 'admin_panel:home_section_list' %}" class="btn-form btn-form-secondary">
+                        <i class="fas fa-arrow-left"></i> Back to List
+                    </a>
+                </div>
             </div>
-            <form method="post">
+
+            <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                <div class="card-body">
-                    <div class="row">
+                
+                <!-- Form Body -->
+                <div class="form-body">
+                    
+                    <!-- Row 1: Title and Section Type -->
+                    <div class="form-row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="{{ form.title.id_for_label }}">Title *</label>
+                                <label for="{{ form.title.id_for_label }}" class="form-label required">
+                                    <i class="fas fa-asterisk"></i> Title
+                                </label>
                                 {{ form.title }}
                                 {% if form.title.errors %}
-                                <div class="text-danger">{{ form.title.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.title.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">Section title</small>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="{{ form.section_type.id_for_label }}">Section Type *</label>
+                                <label for="{{ form.section_type.id_for_label }}" class="form-label required">
+                                    <i class="fas fa-asterisk"></i> Section Type
+                                </label>
                                 {{ form.section_type }}
                                 {% if form.section_type.errors %}
-                                <div class="text-danger">{{ form.section_type.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.section_type.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">Type of content to display</small>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="row">
+                    <!-- Row 2: Genre and Content Limit -->
+                    <div class="form-row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="{{ form.genre.id_for_label }}">Genre</label>
+                                <label for="{{ form.genre.id_for_label }}" class="form-label">
+                                    <i class="fas fa-layer-group"></i> Genre
+                                </label>
                                 {{ form.genre }}
                                 {% if form.genre.errors %}
-                                <div class="text-danger">{{ form.genre.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.genre.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">Select a genre to filter content</small>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="{{ form.content_limit.id_for_label }}">Content Limit *</label>
+                                <label for="{{ form.content_limit.id_for_label }}" class="form-label required">
+                                    <i class="fas fa-asterisk"></i> Content Limit
+                                </label>
                                 {{ form.content_limit }}
                                 {% if form.content_limit.errors %}
-                                <div class="text-danger">{{ form.content_limit.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.content_limit.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">Maximum number of items to display</small>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="row">
+                    <!-- Row 3: Sort By and Display Order -->
+                    <div class="form-row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="{{ form.sort_by.id_for_label }}">Sort By</label>
+                                <label for="{{ form.sort_by.id_for_label }}" class="form-label">
+                                    <i class="fas fa-sort"></i> Sort By
+                                </label>
                                 {{ form.sort_by }}
                                 {% if form.sort_by.errors %}
-                                <div class="text-danger">{{ form.sort_by.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.sort_by.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">How to sort the content</small>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="{{ form.display_order.id_for_label }}">Display Order *</label>
+                                <label for="{{ form.display_order.id_for_label }}" class="form-label required">
+                                    <i class="fas fa-asterisk"></i> Display Order
+                                </label>
                                 {{ form.display_order }}
                                 {% if form.display_order.errors %}
-                                <div class="text-danger">{{ form.display_order.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.display_order.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">Order in which to display this section</small>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="form-group">
-                        <div class="form-check">
-                            {{ form.is_active }}
-                            <label class="form-check-label" for="{{ form.is_active.id_for_label }}">
-                                Is Active
-                            </label>
+                    <!-- Row 4: Is Active -->
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="form-check">
+                                    {{ form.is_active }}
+                                    <label class="form-check-label" for="{{ form.is_active.id_for_label }}">
+                                        <i class="fas fa-toggle-on"></i> Is Active
+                                    </label>
+                                </div>
+                                <small class="form-text">Whether this section is active</small>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="card-footer">
-                    <a href="{% url 'admin_panel:home_section_list' %}" class="btn btn-secondary">Cancel</a>
-                    <button type="submit" class="btn btn-primary float-right">Save</button>
+
+                <!-- Form Footer -->
+                <div class="form-footer">
+                    <div class="form-actions">
+                        <a href="{% url 'admin_panel:home_section_list' %}" class="btn-form btn-form-secondary">
+                            <i class="fas fa-times"></i> Cancel
+                        </a>
+                        <button type="submit" class="btn-form btn-form-primary">
+                            <i class="fas fa-save"></i> Save Home Section
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>

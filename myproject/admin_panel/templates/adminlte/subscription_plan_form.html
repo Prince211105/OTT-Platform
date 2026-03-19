@@ -6,111 +6,179 @@
 {% block content %}
 <div class="row">
     <div class="col-12">
-        <div class="card card-primary">
-            <div class="card-header">
-                <h3 class="card-title">{% if object %}Edit{% else %}Create{% endif %} Subscription Plan</h3>
+        <div class="form-card">
+            <!-- Form Header -->
+            <div class="form-header">
+                <h2>
+                    <i class="fas fa-crown"></i>
+                    {% if object %}Edit{% else %}Create{% endif %} Subscription Plan
+                </h2>
+                <div class="form-actions">
+                    <a href="{% url 'admin_panel:subscription_plan_list' %}" class="btn-form btn-form-secondary">
+                        <i class="fas fa-arrow-left"></i> Back to List
+                    </a>
+                </div>
             </div>
-            <form method="post">
+
+            <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                <div class="card-body">
-                    <div class="row">
+                
+                <!-- Form Body -->
+                <div class="form-body">
+                    
+                    <!-- Row 1: Name and Slug -->
+                    <div class="form-row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="{{ form.name.id_for_label }}">Name *</label>
+                                <label for="{{ form.name.id_for_label }}" class="form-label required">
+                                    <i class="fas fa-asterisk"></i> Name
+                                </label>
                                 {{ form.name }}
                                 {% if form.name.errors %}
-                                <div class="text-danger">{{ form.name.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.name.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">Plan name (e.g., Basic, Premium)</small>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="{{ form.slug.id_for_label }}">Slug *</label>
+                                <label for="{{ form.slug.id_for_label }}" class="form-label required">
+                                    <i class="fas fa-asterisk"></i> Slug
+                                </label>
                                 {{ form.slug }}
                                 {% if form.slug.errors %}
-                                <div class="text-danger">{{ form.slug.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.slug.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">URL-friendly identifier</small>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="{{ form.description.id_for_label }}">Description</label>
-                        {{ form.description }}
-                        {% if form.description.errors %}
-                        <div class="text-danger">{{ form.description.errors }}</div>
-                        {% endif %}
+                    <!-- Row 2: Description (full width) -->
+                    <div class="form-row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="{{ form.description.id_for_label }}" class="form-label">
+                                    <i class="fas fa-align-left"></i> Description
+                                </label>
+                                {{ form.description }}
+                                {% if form.description.errors %}
+                                <div class="form-error">
+                                    {{ form.description.errors }}
+                                </div>
+                                {% endif %}
+                                <small class="form-text">Brief description of the plan</small>
+                            </div>
+                        </div>
                     </div>
                     
-                    <div class="row">
+                    <!-- Row 3: Price, Currency, Billing Cycle -->
+                    <div class="form-row">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="{{ form.price.id_for_label }}">Price *</label>
+                                <label for="{{ form.price.id_for_label }}" class="form-label required">
+                                    <i class="fas fa-asterisk"></i> Price
+                                </label>
                                 {{ form.price }}
                                 {% if form.price.errors %}
-                                <div class="text-danger">{{ form.price.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.price.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">Monthly/annual price</small>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="{{ form.currency.id_for_label }}">Currency *</label>
+                                <label for="{{ form.currency.id_for_label }}" class="form-label required">
+                                    <i class="fas fa-asterisk"></i> Currency
+                                </label>
                                 {{ form.currency }}
                                 {% if form.currency.errors %}
-                                <div class="text-danger">{{ form.currency.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.currency.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">Currency code (e.g., USD, EUR)</small>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="{{ form.billing_cycle.id_for_label }}">Billing Cycle *</label>
+                                <label for="{{ form.billing_cycle.id_for_label }}" class="form-label required">
+                                    <i class="fas fa-asterisk"></i> Billing Cycle
+                                </label>
                                 {{ form.billing_cycle }}
                                 {% if form.billing_cycle.errors %}
-                                <div class="text-danger">{{ form.billing_cycle.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.billing_cycle.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">Billing frequency</small>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="row">
+                    <!-- Row 4: Trial Days, Max Screens, Max Quality -->
+                    <div class="form-row">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="{{ form.trial_days.id_for_label }}">Trial Days *</label>
+                                <label for="{{ form.trial_days.id_for_label }}" class="form-label required">
+                                    <i class="fas fa-asterisk"></i> Trial Days
+                                </label>
                                 {{ form.trial_days }}
                                 {% if form.trial_days.errors %}
-                                <div class="text-danger">{{ form.trial_days.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.trial_days.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">Number of trial days</small>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="{{ form.max_screens.id_for_label }}">Max Screens *</label>
+                                <label for="{{ form.max_screens.id_for_label }}" class="form-label required">
+                                    <i class="fas fa-asterisk"></i> Max Screens
+                                </label>
                                 {{ form.max_screens }}
                                 {% if form.max_screens.errors %}
-                                <div class="text-danger">{{ form.max_screens.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.max_screens.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">Maximum number of simultaneous streams</small>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="{{ form.max_quality.id_for_label }}">Max Quality *</label>
+                                <label for="{{ form.max_quality.id_for_label }}" class="form-label required">
+                                    <i class="fas fa-asterisk"></i> Max Quality
+                                </label>
                                 {{ form.max_quality }}
                                 {% if form.max_quality.errors %}
-                                <div class="text-danger">{{ form.max_quality.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.max_quality.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">Maximum video quality</small>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="row">
+                    <!-- Row 5: Allow Download and Is Popular -->
+                    <div class="form-row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <div class="form-check">
                                     {{ form.allow_download }}
                                     <label class="form-check-label" for="{{ form.allow_download.id_for_label }}">
-                                        Allow Download
+                                        <i class="fas fa-download"></i> Allow Download
                                     </label>
                                 </div>
+                                <small class="form-text">Whether downloads are allowed</small>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -118,38 +186,54 @@
                                 <div class="form-check">
                                     {{ form.is_popular }}
                                     <label class="form-check-label" for="{{ form.is_popular.id_for_label }}">
-                                        Is Popular
+                                        <i class="fas fa-fire"></i> Is Popular
                                     </label>
                                 </div>
+                                <small class="form-text">Mark this as a popular plan</small>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="row">
+                    <!-- Row 6: Is Active and Sort Order -->
+                    <div class="form-row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <div class="form-check">
                                     {{ form.is_active }}
                                     <label class="form-check-label" for="{{ form.is_active.id_for_label }}">
-                                        Is Active
+                                        <i class="fas fa-toggle-on"></i> Is Active
                                     </label>
                                 </div>
+                                <small class="form-text">Whether this plan is active</small>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="{{ form.sort_order.id_for_label }}">Sort Order *</label>
+                                <label for="{{ form.sort_order.id_for_label }}" class="form-label required">
+                                    <i class="fas fa-asterisk"></i> Sort Order
+                                </label>
                                 {{ form.sort_order }}
                                 {% if form.sort_order.errors %}
-                                <div class="text-danger">{{ form.sort_order.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.sort_order.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">Order in which to display this plan</small>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="card-footer">
-                    <a href="{% url 'admin_panel:subscription_plan_list' %}" class="btn btn-secondary">Cancel</a>
-                    <button type="submit" class="btn btn-primary float-right">Save</button>
+
+                <!-- Form Footer -->
+                <div class="form-footer">
+                    <div class="form-actions">
+                        <a href="{% url 'admin_panel:subscription_plan_list' %}" class="btn-form btn-form-secondary">
+                            <i class="fas fa-times"></i> Cancel
+                        </a>
+                        <button type="submit" class="btn-form btn-form-primary">
+                            <i class="fas fa-save"></i> Save Subscription Plan
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>

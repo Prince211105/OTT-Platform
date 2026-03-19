@@ -6,19 +6,34 @@
 {% block content %}
 <div class="row">
     <div class="col-12">
-        <div class="card card-danger">
+        <div class="card card-danger card-outline">
             <div class="card-header">
-                <h3 class="card-title">Confirm Delete</h3>
+                <h3 class="card-title"><i class="fas fa-television mr-2"></i>Confirm Delete</h3>
+                <div class="card-tools">
+                    <a href="{% url 'admin_panel:season_list' %}" class="btn btn-sm btn-secondary">
+                        <i class="fas fa-arrow-left mr-1"></i> Back to List
+                    </a>
+                </div>
             </div>
             <div class="card-body">
-                <p>Are you sure you want to delete Season {{ object.season_number }} of "<strong>{{ object.content.title }}</strong>"?</p>
-                <p class="text-danger"><i class="fas fa-exclamation-triangle"></i> This action cannot be undone.</p>
+                <div class="alert alert-warning">
+                    <i class="fas fa-exclamation-triangle mr-2"></i>
+                    <strong>Warning:</strong> This action cannot be undone!
+                </div>
+                <p>Are you sure you want to delete Season <strong>{{ object.season_number }}</strong> of "<strong>{{ object.content.title }}</strong>"?</p>
+                <p class="text-muted small">This will remove the season and all associated episodes.</p>
             </div>
             <div class="card-footer">
                 <form method="post">
                     {% csrf_token %}
-                    <a href="{% url 'admin_panel:season_list' %}" class="btn btn-secondary">Cancel</a>
-                    <button type="submit" class="btn btn-danger float-right">Confirm Delete</button>
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'admin_panel:season_list' %}" class="btn btn-secondary">
+                            <i class="fas fa-times mr-1"></i> Cancel
+                        </a>
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fas fa-trash mr-1"></i> Confirm Delete
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>

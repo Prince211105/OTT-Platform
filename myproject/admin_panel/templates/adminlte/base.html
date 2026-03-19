@@ -5,131 +5,365 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}AdminLTE{% endblock %}</title>
     {% load static %}
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- AdminLTE CSS -->
     <link rel="stylesheet" href="{% static 'admin-lte/dist/css/adminlte.min.css' %}">
     <link rel="stylesheet" href="{% static 'admin-lte/plugins/fontawesome-free/css/all.min.css' %}">
     <!-- Custom styles -->
     <style>
         :root {
-            --primary-color: #6366f1;
-            --primary-hover: #4f46e5;
-            --secondary-color: #6c757d;
-            --success-color: #10b981;
-            --info-color: #0ea5e9;
-            --warning-color: #f59e0b;
-            --danger-color: #ef4444;
-            --light-color: #f3f4f6;
-            --dark-color: #1f2937;
-            --sidebar-bg: #111827;
-            --sidebar-hover: #374151;
-            --text-primary: #1f2937;
-            --text-secondary: #6b7280;
-            --border-color: #e5e7eb;
-            --card-bg: #ffffff;
-            --input-bg: #f9fafb;
-            --input-border: #d1d5db;
+            /* Light Mode - Default (Filament-inspired Light Theme) */
+            --bg-primary: #F9FAFB;
+            --bg-secondary: #F3F4F6;
+            --bg-card: #FFFFFF;
+            --border-color: #E5E7EB;
+            --text-primary: #111827;
+            --text-secondary: #6B7280;
+            --text-muted: #9CA3AF;
+            --accent: #F59E0B;
+            --accent-hover: #D97706;
+            --accent-light: rgba(245, 158, 11, 0.1);
+            --success: #22C55E;
+            --success-hover: #16A34A;
+            --danger: #EF4444;
+            --danger-hover: #DC2626;
+            --info: #3B82F6;
+            --info-hover: #2563EB;
+            --warning: #F59E0B;
+            --warning-hover: #D97706;
+            
+            /* Shadow variables */
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.25);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+            
+            /* Spacing */
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --spacing-2xl: 3rem;
+            
+            /* Border radius */
+            --radius-sm: 0.25rem;
+            --radius-md: 0.375rem;
+            --radius-lg: 0.5rem;
+            --radius-xl: 0.75rem;
+            --radius-2xl: 1rem;
+            --radius-full: 9999px;
+            
+            /* Transitions */
+            --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         [data-theme="dark"] {
-            --primary-color: #818cf8;
-            --primary-hover: #6366f1;
-            --secondary-color: #9ca3af;
-            --success-color: #34d399;
-            --info-color: #38bdf8;
-            --warning-color: #fbbf24;
-            --danger-color: #f87171;
-            --light-color: #374151;
-            --dark-color: #f3f4f6;
-            --sidebar-bg: #111827;
-            --sidebar-hover: #374151;
-            --text-primary: #f3f4f6;
-            --text-secondary: #d1d5db;
-            --border-color: #374151;
-            --card-bg: #1f2937;
-            --input-bg: #374151;
-            --input-border: #4b5563;
+            /* Dark Mode - Filament Style */
+            --bg-primary: #0F172A;
+            --bg-secondary: #1E293B;
+            --bg-card: #111827;
+            --border-color: #1F2937;
+            --text-primary: #E5E7EB;
+            --text-secondary: #9CA3AF;
+            --text-muted: #6B7280;
+            --accent: #F59E0B;
+            --accent-hover: #D97706;
+            --accent-light: rgba(245, 158, 11, 0.15);
+            --success: #22C55E;
+            --success-hover: #16A34A;
+            --danger: #EF4444;
+            --danger-hover: #DC2626;
+            --info: #3B82F6;
+            --info-hover: #2563EB;
+            --warning: #F59E0B;
+            --warning-hover: #D97706;
+        }
+
+        [data-theme="light"] {
+            /* Light Mode - Explicit light theme */
+            --bg-primary: #F9FAFB;
+            --bg-secondary: #F3F4F6;
+            --bg-card: #FFFFFF;
+            --border-color: #E5E7EB;
+            --text-primary: #111827;
+            --text-secondary: #6B7280;
+            --text-muted: #9CA3AF;
+            --accent: #F59E0B;
+            --accent-hover: #D97706;
+            --accent-light: rgba(245, 158, 11, 0.1);
+            --success: #22C55E;
+            --success-hover: #16A34A;
+            --danger: #EF4444;
+            --danger-hover: #DC2626;
+            --info: #3B82F6;
+            --info-hover: #2563EB;
+            --warning: #F59E0B;
+            --warning-hover: #D97706;
+        }
+
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 14px;
         }
 
         body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             transition: background-color 0.3s ease, color 0.3s ease;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        [data-theme="light"] body {
+            background-color: var(--bg-primary);
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .text-primary {
+            color: var(--accent) !important;
+        }
+
+        .text-secondary {
+            color: var(--text-secondary) !important;
+        }
+
+        .text-muted {
+            color: var(--text-muted) !important;
+        }
+
+        /* Sidebar Styles - Filament Inspired */
+        .main-sidebar {
+            background-color: var(--bg-secondary);
+            transition: background-color 0.3s ease;
+            box-shadow: var(--shadow-lg);
+            border-right: 1px solid var(--border-color);
         }
 
         .sidebar {
-            background-color: var(--sidebar-bg);
+            background-color: var(--bg-secondary);
             transition: background-color 0.3s ease;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--border-color) var(--bg-secondary);
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background-color: var(--border-color);
+            border-radius: 3px;
         }
 
         .sidebar .nav-link {
             color: var(--text-secondary);
-            transition: all 0.3s ease;
+            transition: var(--transition);
+            padding: 10px 16px;
+            border-radius: var(--radius-md);
+            margin: 2px 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 500;
+            font-size: 0.875rem;
+            position: relative;
         }
 
-        .sidebar .nav-link:hover,
+        .sidebar .nav-link:hover {
+            background-color: var(--accent-light);
+            color: var(--accent);
+        }
+
         .sidebar .nav-link.active {
-            background-color: var(--sidebar-hover);
-            color: var(--text-primary);
+            background: linear-gradient(90deg, var(--accent-light) 0%, transparent 100%);
+            color: var(--accent);
+            border-left: 2px solid var(--accent);
         }
 
         .sidebar .nav-link i {
             color: var(--text-secondary);
-            transition: color 0.3s ease;
+            transition: var(--transition);
+            width: 24px;
+            text-align: center;
+            font-size: 1.1rem;
         }
 
         .sidebar .nav-link:hover i,
         .sidebar .nav-link.active i {
-            color: var(--primary-color);
+            color: var(--accent);
         }
 
         .brand-text {
-            color: var(--text-primary) !important;
+            color: var(--accent) !important;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            font-size: 1.25rem;
         }
 
+        .brand-link {
+            display: flex;
+            align-items: center;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .brand-link:hover {
+            background-color: var(--bg-card);
+        }
+
+        /* Card Styles - Filament Inspired */
         .card {
-            background-color: var(--card-bg);
+            background-color: var(--bg-card);
             border-color: var(--border-color);
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            border-radius: var(--radius-xl);
+            margin-bottom: var(--spacing-xl);
+            border: 1px solid var(--border-color);
         }
 
         .card-header {
-            background-color: var(--light-color);
+            background-color: transparent;
             border-color: var(--border-color);
-            transition: background-color 0.3s ease, border-color 0.3s ease;
+            transition: var(--transition);
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border-color);
+            border-radius: var(--radius-xl) var(--radius-xl) 0 0;
         }
 
         .card-title {
             color: var(--text-primary);
+            font-weight: 600;
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
+        .card-body {
+            padding: 24px;
+        }
+
+        .card-footer {
+            background-color: transparent;
+            border-color: var(--border-color);
+            transition: var(--transition);
+            padding: 20px 24px;
+            border-top: 1px solid var(--border-color);
+            border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+        }
+
+        /* Table Styles - Filament Inspired */
         .table {
             color: var(--text-primary);
         }
 
         .table th {
-            background-color: var(--light-color);
-            color: var(--text-primary);
+            background-color: var(--bg-secondary);
+            color: var(--text-secondary);
             border-color: var(--border-color);
+            font-weight: 600;
+            padding: 12px 16px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .table td {
             border-color: var(--border-color);
+            padding: 12px 16px;
+            vertical-align: middle;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .table tbody tr {
+            transition: var(--transition);
         }
 
         .table tbody tr:hover {
-            background-color: var(--light-color);
+            background-color: var(--accent-light);
         }
 
+        /* Badge Styles - Filament Inspired */
+        .badge {
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: var(--radius-full);
+            font-weight: 500;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge.bg-success {
+            background-color: var(--success) !important;
+        }
+
+        .badge.bg-info {
+            background-color: var(--info) !important;
+        }
+
+        .badge.bg-warning {
+            background-color: var(--warning) !important;
+        }
+
+        .badge.bg-danger {
+            background-color: var(--danger) !important;
+        }
+
+        .badge.bg-secondary {
+            background-color: var(--text-secondary) !important;
+        }
+
+        .badge.bg-dark {
+            background-color: var(--bg-card) !important;
+        }
+
+        .badge.bg-primary {
+            background-color: var(--accent) !important;
+        }
+
+        /* Form Styles - Filament Inspired */
         .form-control {
-            background-color: var(--input-bg);
-            border-color: var(--input-border);
+            background-color: var(--bg-card);
+            border-color: var(--border-color);
             color: var(--text-primary);
-            transition: background-color 0.3s ease, border-color 0.3s ease;
+            transition: var(--transition);
+            border-radius: var(--radius-md);
+            padding: 10px 14px;
+            font-size: 0.9375rem;
+            box-shadow: var(--shadow-sm);
         }
 
         .form-control:focus {
-            background-color: var(--input-bg);
-            border-color: var(--primary-color);
+            background-color: var(--bg-card);
+            border-color: var(--accent);
             color: var(--text-primary);
+            box-shadow: 0 0 0 3px var(--accent-light);
         }
 
         .form-control::placeholder {
@@ -137,80 +371,186 @@
         }
 
         .form-select {
-            background-color: var(--input-bg);
-            border-color: var(--input-border);
+            background-color: var(--bg-card);
+            border-color: var(--border-color);
             color: var(--text-primary);
+            border-radius: var(--radius-md);
+            padding: 10px 14px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .form-select:focus {
+            background-color: var(--bg-card);
+            border-color: var(--accent);
+            color: var(--text-primary);
+            box-shadow: 0 0 0 3px var(--accent-light);
         }
 
         .form-label {
             color: var(--text-primary);
             font-weight: 500;
+            margin-bottom: 8px;
+            font-size: 0.875rem;
+        }
+
+        .form-text {
+            color: var(--text-secondary);
+            font-size: 0.8125rem;
+            margin-top: 4px;
+        }
+
+        .text-danger {
+            color: var(--danger) !important;
+        }
+
+        .form-check-input {
+            border-color: var(--border-color);
+            background-color: var(--bg-card);
+            border-radius: var(--radius-sm);
+        }
+
+        .form-check-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-light);
+        }
+
+        .form-check-label {
+            color: var(--text-primary);
+            font-weight: 400;
+        }
+
+        /* Button Styles - Filament Inspired */
+        .btn {
+            border-radius: var(--radius-md);
+            padding: 10px 20px;
+            font-weight: 500;
+            font-size: 0.875rem;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+            border: none;
         }
 
         .btn-primary {
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
-            transition: all 0.3s ease;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+            color: #ffffff;
         }
 
         .btn-primary:hover {
-            background-color: var(--primary-hover);
-            border-color: var(--primary-hover);
+            background: linear-gradient(135deg, var(--accent-hover) 0%, var(--accent) 100%);
+            color: #ffffff;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
         }
 
         .btn-secondary {
-            background-color: var(--secondary-color);
-            border-color: var(--secondary-color);
+            background-color: var(--bg-card);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            transform: translateY(-1px);
         }
 
         .btn-success {
-            background-color: var(--success-color);
-            border-color: var(--success-color);
+            background: linear-gradient(135deg, var(--success) 0%, var(--success-hover) 100%);
+            color: #ffffff;
+        }
+
+        .btn-success:hover {
+            background: linear-gradient(135deg, var(--success-hover) 0%, var(--success) 100%);
+            color: #ffffff;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-lg);
         }
 
         .btn-danger {
-            background-color: var(--danger-color);
-            border-color: var(--danger-color);
+            background: linear-gradient(135deg, var(--danger) 0%, var(--danger-hover) 100%);
+            color: #ffffff;
         }
 
-        .badge {
-            color: #fff;
+        .btn-danger:hover {
+            background: linear-gradient(135deg, var(--danger-hover) 0%, var(--danger) 100%);
+            color: #ffffff;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-lg);
         }
 
-        .nav-link {
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 0.8125rem;
+        }
+
+        .btn-lg {
+            padding: 12px 24px;
+            font-size: 0.9375rem;
+        }
+
+        /* Navbar Styles - Filament Inspired */
+        .main-header {
+            background-color: var(--bg-card);
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .navbar-nav .nav-link {
             color: var(--text-primary);
+            padding: 12px 16px;
+            border-radius: var(--radius-md);
+            transition: var(--transition);
         }
 
-        .navbar-light .navbar-nav .nav-link {
-            color: var(--text-primary);
-        }
-
-        .footer {
-            color: var(--text-secondary);
+        .navbar-nav .nav-link:hover {
+            background-color: var(--accent-light);
+            color: var(--accent);
         }
 
         .dark-mode-toggle {
             cursor: pointer;
             padding: 8px;
             border-radius: 50%;
-            transition: background-color 0.3s ease;
-        }
-
-        .dark-mode-toggle:hover {
-            background-color: var(--light-color);
-        }
-
-        .sidebar-menu .menu-open > .nav-link {
-            background-color: var(--sidebar-hover);
+            transition: var(--transition);
             color: var(--text-primary);
         }
 
-        .sidebar-menu .menu-open > .nav-link i {
-            color: var(--primary-color);
+        .dark-mode-toggle:hover {
+            background-color: var(--accent-light);
+            color: var(--accent);
+        }
+
+        .user-menu .nav-link {
+            padding: 8px 12px;
+            border-radius: var(--radius-md);
+            transition: var(--transition);
+        }
+
+        .user-menu .nav-link:hover {
+            background-color: var(--accent-light);
+        }
+
+        /* Content Header - Filament Inspired */
+        .content-header {
+            padding: 24px 0;
         }
 
         .content-header h1 {
             color: var(--text-primary);
+            font-weight: 700;
+            font-size: 1.75rem;
+            margin-bottom: 0;
+        }
+
+        .breadcrumb {
+            background-color: transparent;
+            padding: 0;
+            margin-bottom: 0;
         }
 
         .breadcrumb-item.active {
@@ -219,66 +559,544 @@
 
         .breadcrumb-item a {
             color: var(--text-secondary);
+            transition: var(--transition);
         }
 
         .breadcrumb-item a:hover {
-            color: var(--primary-color);
+            color: var(--accent);
         }
 
+        /* Pagination - Filament Inspired */
         .page-link {
             color: var(--text-primary);
-            background-color: var(--light-color);
+            background-color: var(--bg-card);
             border-color: var(--border-color);
+            border-radius: var(--radius-md);
+            margin: 0 4px;
+            transition: var(--transition);
         }
 
         .page-link:hover {
-            background-color: var(--sidebar-hover);
-            color: var(--text-primary);
+            background-color: var(--accent-light);
+            color: var(--accent);
+            border-color: var(--accent);
         }
 
         .page-item.active .page-link {
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+            border-color: var(--accent);
+            color: #ffffff;
         }
 
         .page-link:focus {
-            box-shadow: 0 0 0 0.2rem rgba(99, 102, 241, 0.25);
+            box-shadow: 0 0 0 3px var(--accent-light);
         }
 
-        .text-primary {
-            color: var(--primary-color) !important;
+        /* Form Row (2-column layout) */
+        .form-row {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 24px;
         }
 
-        .bg-primary {
-            background-color: var(--primary-color) !important;
+        .form-row .col-md-6,
+        .form-row .col-md-4,
+        .form-row .col-md-3,
+        .form-row .col-md-12 {
+            flex: 1;
+            min-width: 0;
         }
 
-        .bg-secondary {
-            background-color: var(--secondary-color) !important;
+        .form-group {
+            margin-bottom: 0;
         }
 
-        .bg-success {
-            background-color: var(--success-color) !important;
+        .form-row .form-group {
+            margin-bottom: 24px;
         }
 
-        .bg-info {
-            background-color: var(--info-color) !important;
+        .form-row .form-group:last-child {
+            margin-bottom: 0;
         }
 
-        .bg-warning {
-            background-color: var(--warning-color) !important;
+        /* Responsive */
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+                gap: 24px;
+            }
+
+            .form-row .col-md-6,
+            .form-row .col-md-4,
+            .form-row .col-md-3,
+            .form-row .col-md-12 {
+                flex: 1;
+                min-width: 100%;
+            }
+
+            .form-row .form-group {
+                margin-bottom: 24px;
+            }
+
+            .sidebar .nav-link {
+                padding: 10px 16px;
+            }
+
+            .card-body {
+                padding: 16px;
+            }
+
+            .card-header {
+                padding: 16px;
+            }
+
+            .card-footer {
+                padding: 16px;
+            }
         }
 
-        .bg-danger {
-            background-color: var(--danger-color) !important;
+        /* Empty State - Filament Inspired */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background-color: var(--bg-card);
+            border-radius: var(--radius-xl);
+            border: 2px dashed var(--border-color);
         }
 
-        .bg-light {
-            background-color: var(--light-color) !important;
+        .empty-state i {
+            font-size: 4rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+            opacity: 0.5;
         }
 
-        .bg-dark {
-            background-color: var(--dark-color) !important;
+        .empty-state h4 {
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .empty-state p {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        /* Icon Colors */
+        .text-warning {
+            color: var(--warning) !important;
+        }
+
+        .text-success {
+            color: var(--success) !important;
+        }
+
+        .text-danger {
+            color: var(--danger) !important;
+        }
+
+        .text-info {
+            color: var(--info) !important;
+        }
+
+        /* Card Tools */
+        .card-tools .btn {
+            padding: 6px 12px;
+            font-size: 0.8125rem;
+        }
+
+        /* User Panel */
+        .user-panel {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .user-panel .image img {
+            border: 2px solid var(--accent);
+        }
+
+        .user-panel .info a {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        /* Footer */
+        .main-footer {
+            background-color: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 20px;
+        }
+
+        /* Scrollbar for content */
+        .content-wrapper {
+            overflow-y: auto;
+        }
+
+        /* Dark Mode Background */
+        [data-theme="dark"] body {
+            background-color: var(--bg-primary);
+        }
+
+        /* ============================================
+           FORM STYLES - Filament Inspired
+           ============================================ */
+
+        /* Form Card Container */
+        .form-card {
+            background-color: var(--bg-card);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .form-card:hover {
+            box-shadow: var(--shadow-xl);
+        }
+
+        /* Form Header */
+        .form-header {
+            padding: 24px 32px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--bg-secondary);
+        }
+
+        .form-header h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .form-header h2 i {
+            color: var(--accent);
+        }
+
+        /* Form Body */
+        .form-body {
+            padding: 32px;
+        }
+
+        /* Form Section Title */
+        .form-section-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-section-title i {
+            color: var(--accent);
+        }
+
+        /* Form Row */
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -12px 24px -12px;
+        }
+
+        .form-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .form-row .col-md-1,
+        .form-row .col-md-2,
+        .form-row .col-md-3,
+        .form-row .col-md-4,
+        .form-row .col-md-5,
+        .form-row .col-md-6,
+        .form-row .col-md-7,
+        .form-row .col-md-8,
+        .form-row .col-md-9,
+        .form-row .col-md-10,
+        .form-row .col-md-11,
+        .form-row .col-md-12 {
+            padding: 0 12px;
+        }
+
+        /* Form Group */
+        .form-group {
+            margin-bottom: 0;
+        }
+
+        /* Form Label */
+        .form-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            padding: 0 4px;
+        }
+
+        .form-label i {
+            color: var(--danger);
+            margin-right: 4px;
+        }
+
+        .form-label.required::after {
+            content: " *";
+            color: var(--danger);
+        }
+
+        /* Form Input */
+        .form-control {
+            display: block;
+            width: 100%;
+            padding: 10px 14px;
+            font-size: 0.875rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: var(--text-primary);
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            transition: var(--transition);
+            box-shadow: none;
+        }
+
+        .form-control:hover {
+            border-color: var(--accent);
+        }
+
+        .form-control:focus {
+            color: var(--text-primary);
+            background-color: var(--bg-card);
+            border-color: var(--accent);
+            outline: none;
+            box-shadow: 0 0 0 3px var(--accent-light);
+        }
+
+        .form-control::placeholder {
+            color: var(--text-muted);
+            opacity: 0.6;
+        }
+
+        /* Form Select */
+        select.form-control {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236B7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 12px center;
+            background-repeat: no-repeat;
+            background-size: 16px;
+            padding-right: 36px;
+            cursor: pointer;
+        }
+
+        /* Form Textarea */
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Form Check */
+        .form-check {
+            display: flex;
+            align-items: flex-start;
+            padding: 10px 14px;
+            margin-bottom: 0;
+        }
+
+        .form-check-input {
+            width: 20px;
+            height: 20px;
+            margin-top: 2px;
+            margin-right: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            background-color: var(--bg-secondary);
+            cursor: pointer;
+        }
+
+        .form-check-input:checked {
+            background-color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .form-check-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px var(--accent-light);
+        }
+
+        .form-check-label {
+            font-size: 0.875rem;
+            color: var(--text-primary);
+            font-weight: 400;
+            margin-bottom: 0;
+            cursor: pointer;
+        }
+
+        .form-check-label i {
+            color: var(--text-secondary);
+            margin-right: 6px;
+        }
+
+        /* Helper Text */
+        .form-text {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 6px;
+            padding: 0 4px;
+        }
+
+        /* Error Messages */
+        .form-error {
+            color: var(--danger);
+            font-size: 0.75rem;
+            margin-top: 6px;
+            padding: 0 4px;
+        }
+
+        .form-error ul {
+            padding-left: 16px;
+            margin: 4px 0 0 0;
+        }
+
+        .form-error li {
+            margin-bottom: 2px;
+        }
+
+        /* Form Footer */
+        .form-footer {
+            padding: 20px 32px;
+            border-top: 1px solid var(--border-color);
+            background-color: var(--bg-secondary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Form Buttons */
+        .btn-form {
+            padding: 10px 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            border-radius: var(--radius-md);
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-form-secondary {
+            background-color: var(--bg-secondary);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-form-secondary:hover {
+            background-color: var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .btn-form-primary {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+            color: white;
+            border: none;
+            box-shadow: 0 2px 4px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-form-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(245, 158, 11, 0.4);
+        }
+
+        .btn-form-primary:active {
+            transform: translateY(0);
+        }
+
+        /* Form Actions */
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        /* Responsive Form */
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+                margin: 0 0 24px 0;
+            }
+
+            .form-row .col-md-1,
+            .form-row .col-md-2,
+            .form-row .col-md-3,
+            .form-row .col-md-4,
+            .form-row .col-md-5,
+            .form-row .col-md-6,
+            .form-row .col-md-7,
+            .form-row .col-md-8,
+            .form-row .col-md-9,
+            .form-row .col-md-10,
+            .form-row .col-md-11,
+            .form-row .col-md-12 {
+                padding: 0;
+                width: 100%;
+            }
+
+            .form-header,
+            .form-body,
+            .form-footer {
+                padding: 24px;
+            }
+
+            .form-actions {
+                flex-direction: column-reverse;
+            }
+
+            .btn-form {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Dark Mode Form Styles */
+        [data-theme="dark"] .form-control {
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        [data-theme="dark"] .form-control:focus {
+            background-color: var(--bg-card);
+        }
+
+        [data-theme="dark"] .form-check-input {
+            background-color: var(--bg-secondary);
+            border-color: var(--border-color);
+        }
+
+        [data-theme="dark"] .form-check-label {
+            color: var(--text-primary);
+        }
+
+        [data-theme="dark"] .form-text {
+            color: var(--text-muted);
+        }
+
+        [data-theme="dark"] .btn-form-secondary {
+            background-color: var(--bg-secondary);
+            color: var(--text-secondary);
+            border-color: var(--border-color);
+        }
+
+        [data-theme="dark"] .btn-form-secondary:hover {
+            background-color: var(--border-color);
+            color: var(--text-primary);
         }
     </style>
     {% block extra_css %}{% endblock %}
@@ -286,7 +1104,7 @@
 <body class="hold-transition sidebar-mini layout-fixed" id="body-mode">
 <div class="wrapper">
     <!-- Navbar -->
-    <nav class="main-header navbar navbar-expand navbar-white navbar-light" style="background-color: var(--light-color) !important; border-bottom: 1px solid var(--border-color);">
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
@@ -346,91 +1164,91 @@
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                     <!-- Content Menu -->
                     <li class="nav-item">
-                        <a href="{% url 'admin_panel:content_list' %}" class="nav-link">
+                        <a href="{% url 'admin_panel:content_list' %}" class="nav-link {% if 'content' in request.resolver_match.url_name and 'content' not in request.resolver_match.url_name|add:'_' %}active{% endif %}">
                             <i class="nav-icon fas fa-film"></i>
                             <p>Contents</p>
                         </a>
                     </li>
                     <!-- Genres Menu -->
                     <li class="nav-item">
-                        <a href="{% url 'admin_panel:genre_list' %}" class="nav-link">
+                        <a href="{% url 'admin_panel:genre_list' %}" class="nav-link {% if 'genre' in request.resolver_match.url_name %}active{% endif %}">
                             <i class="nav-icon fas fa-tags"></i>
                             <p>Genres</p>
                         </a>
                     </li>
                     <!-- Tags Menu -->
                     <li class="nav-item">
-                        <a href="{% url 'admin_panel:tag_list' %}" class="nav-link">
+                        <a href="{% url 'admin_panel:tag_list' %}" class="nav-link {% if 'tag' in request.resolver_match.url_name %}active{% endif %}">
                             <i class="nav-icon fas fa-tag"></i>
                             <p>Tags</p>
                         </a>
                     </li>
                     <!-- People Menu -->
                     <li class="nav-item">
-                        <a href="{% url 'admin_panel:person_list' %}" class="nav-link">
+                        <a href="{% url 'admin_panel:person_list' %}" class="nav-link {% if 'person' in request.resolver_match.url_name %}active{% endif %}">
                             <i class="nav-icon fas fa-users"></i>
                             <p>People</p>
                         </a>
                     </li>
                     <!-- Seasons Menu -->
                     <li class="nav-item">
-                        <a href="{% url 'admin_panel:season_list' %}" class="nav-link">
+                        <a href="{% url 'admin_panel:season_list' %}" class="nav-link {% if 'season' in request.resolver_match.url_name %}active{% endif %}">
                             <i class="nav-icon fas fa-layer-group"></i>
                             <p>Seasons</p>
                         </a>
                     </li>
                     <!-- Episodes Menu -->
                     <li class="nav-item">
-                        <a href="{% url 'admin_panel:episode_list' %}" class="nav-link">
+                        <a href="{% url 'admin_panel:episode_list' %}" class="nav-link {% if 'episode' in request.resolver_match.url_name %}active{% endif %}">
                             <i class="nav-icon fas fa-video"></i>
                             <p>Episodes</p>
                         </a>
                     </li>
                     <!-- Hero Sliders Menu -->
                     <li class="nav-item">
-                        <a href="{% url 'admin_panel:hero_slider_list' %}" class="nav-link">
+                        <a href="{% url 'admin_panel:hero_slider_list' %}" class="nav-link {% if 'hero_slider' in request.resolver_match.url_name %}active{% endif %}">
                             <i class="nav-icon fas fa-images"></i>
                             <p>Hero Sliders</p>
                         </a>
                     </li>
                     <!-- Home Sections Menu -->
                     <li class="nav-item">
-                        <a href="{% url 'admin_panel:home_section_list' %}" class="nav-link">
+                        <a href="{% url 'admin_panel:home_section_list' %}" class="nav-link {% if 'home_section' in request.resolver_match.url_name %}active{% endif %}">
                             <i class="nav-icon fas fa-th-large"></i>
                             <p>Home Sections</p>
                         </a>
                     </li>
                     <!-- Subscription Plans Menu -->
                     <li class="nav-item">
-                        <a href="{% url 'admin_panel:subscription_plan_list' %}" class="nav-link">
+                        <a href="{% url 'admin_panel:subscription_plan_list' %}" class="nav-link {% if 'subscription_plan' in request.resolver_match.url_name %}active{% endif %}">
                             <i class="nav-icon fas fa-crown"></i>
                             <p>Subscription Plans</p>
                         </a>
                     </li>
                     <!-- Users Menu -->
                     <li class="nav-item">
-                        <a href="{% url 'admin_panel:user_list' %}" class="nav-link">
+                        <a href="{% url 'admin_panel:user_list' %}" class="nav-link {% if 'user' in request.resolver_match.url_name %}active{% endif %}">
                             <i class="nav-icon fas fa-user"></i>
                             <p>Users</p>
                         </a>
                     </li>
                     <!-- Payments Menu -->
                     <li class="nav-item">
-                        <a href="{% url 'admin_panel:payment_list' %}" class="nav-link">
+                        <a href="{% url 'admin_panel:payment_list' %}" class="nav-link {% if 'payment' in request.resolver_match.url_name %}active{% endif %}">
                             <i class="nav-icon fas fa-money-bill-wave"></i>
                             <p>Payments</p>
                         </a>
                     </li>
                     <!-- Support Tickets Menu -->
                     <li class="nav-item">
-                        <a href="{% url 'admin_panel:support_ticket_list' %}" class="nav-link">
+                        <a href="{% url 'admin_panel:support_ticket_list' %}" class="nav-link {% if 'support_ticket' in request.resolver_match.url_name %}active{% endif %}">
                             <i class="nav-icon fas fa-life-ring"></i>
                             <p>Support Tickets</p>
                         </a>
                     </li>
                     <!-- Languages Menu -->
                     <li class="nav-item">
-                        <a href="{% url 'admin_panel:language_list' %}" class="nav-link">
+                        <a href="{% url 'admin_panel:language_list' %}" class="nav-link {% if 'language' in request.resolver_match.url_name %}active{% endif %}">
                             <i class="nav-icon fas fa-language"></i>
                             <p>Languages</p>
                         </a>
@@ -449,7 +1267,7 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <!-- <li class="breadcrumb-item"><a href="/">Home</a></li> -->
                             <li class="breadcrumb-item active">{% block page_subtitle %}Dashboard{% endblock %}</li>
                         </ol>
                     </div>
@@ -479,7 +1297,6 @@
         const darkModeToggle = document.getElementById('darkModeToggle');
         const darkModeIcon = document.getElementById('darkModeIcon');
         const htmlElement = document.getElementById('html-mode');
-        const bodyElement = document.getElementById('body-mode');
 
         // Check for saved user preference
         const savedTheme = localStorage.getItem('theme');
@@ -491,14 +1308,13 @@
 
         darkModeToggle.addEventListener('click', function(e) {
             e.preventDefault();
-            const currentTheme = htmlElement.getAttribute('data-theme');
+            const currentTheme = htmlElement.getAttribute('data-theme') || 'light';
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
             setTheme(newTheme);
         });
 
         function setTheme(theme) {
             htmlElement.setAttribute('data-theme', theme);
-            bodyElement.setAttribute('data-theme', theme);
             localStorage.setItem('theme', theme);
 
             if (theme === 'dark') {

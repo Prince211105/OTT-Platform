@@ -6,45 +6,119 @@
 {% block content %}
 <div class="row">
     <div class="col-12">
-        <div class="card card-primary">
-            <div class="card-header">
-                <h3 class="card-title">{% if object %}Edit{% else %}Create{% endif %} Person</h3>
+        <div class="form-card">
+            <!-- Form Header -->
+            <div class="form-header">
+                <h2>
+                    <i class="fas fa-user-friends"></i>
+                    {% if object %}Edit{% else %}Create{% endif %} Person
+                </h2>
+                <div class="form-actions">
+                    <a href="{% url 'admin_panel:person_list' %}" class="btn-form btn-form-secondary">
+                        <i class="fas fa-arrow-left"></i> Back to List
+                    </a>
+                </div>
             </div>
-            <form method="post">
+
+            <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                <div class="card-body">
-                    <div class="row">
+                
+                <!-- Form Body -->
+                <div class="form-body">
+                    
+                    <!-- Row 1: Name and Role -->
+                    <div class="form-row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="{{ form.name.id_for_label }}">Name *</label>
+                                <label for="{{ form.name.id_for_label }}" class="form-label required">
+                                    <i class="fas fa-asterisk"></i> Name
+                                </label>
                                 {{ form.name }}
                                 {% if form.name.errors %}
-                                <div class="text-danger">{{ form.name.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.name.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">Enter the person's name</small>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="{{ form.photo.id_for_label }}">Photo URL</label>
-                                {{ form.photo }}
-                                {% if form.photo.errors %}
-                                <div class="text-danger">{{ form.photo.errors }}</div>
+                                <label for="{{ form.role.id_for_label }}" class="form-label">
+                                    <i class="fas fa-briefcase"></i> Role
+                                </label>
+                                {{ form.role }}
+                                {% if form.role.errors %}
+                                <div class="form-error">
+                                    {{ form.role.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">Select the person's role</small>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="{{ form.bio.id_for_label }}">Bio</label>
-                        {{ form.bio }}
-                        {% if form.bio.errors %}
-                        <div class="text-danger">{{ form.bio.errors }}</div>
-                        {% endif %}
+                    <!-- Row 2: Bio (full width) -->
+                    <div class="form-row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="{{ form.bio.id_for_label }}" class="form-label">
+                                    <i class="fas fa-align-left"></i> Bio
+                                </label>
+                                {{ form.bio }}
+                                {% if form.bio.errors %}
+                                <div class="form-error">
+                                    {{ form.bio.errors }}
+                                </div>
+                                {% endif %}
+                                <small class="form-text">Brief biography of the person</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Row 3: Photo and Slug -->
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.photo.id_for_label }}" class="form-label">
+                                    <i class="fas fa-user-circle"></i> Photo URL
+                                </label>
+                                {{ form.photo }}
+                                {% if form.photo.errors %}
+                                <div class="form-error">
+                                    {{ form.photo.errors }}
+                                </div>
+                                {% endif %}
+                                <small class="form-text">URL to the person's photo</small>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.slug.id_for_label }}" class="form-label">
+                                    <i class="fas fa-link"></i> Slug
+                                </label>
+                                {{ form.slug }}
+                                {% if form.slug.errors %}
+                                <div class="form-error">
+                                    {{ form.slug.errors }}
+                                </div>
+                                {% endif %}
+                                <small class="form-text">URL-friendly identifier</small>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="card-footer">
-                    <a href="{% url 'admin_panel:person_list' %}" class="btn btn-secondary">Cancel</a>
-                    <button type="submit" class="btn btn-primary float-right">Save</button>
+
+                <!-- Form Footer -->
+                <div class="form-footer">
+                    <div class="form-actions">
+                        <a href="{% url 'admin_panel:person_list' %}" class="btn-form btn-form-secondary">
+                            <i class="fas fa-times"></i> Cancel
+                        </a>
+                        <button type="submit" class="btn-form btn-form-primary">
+                            <i class="fas fa-save"></i> Save Person
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>

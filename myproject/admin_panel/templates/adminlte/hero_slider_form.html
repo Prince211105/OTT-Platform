@@ -6,42 +6,72 @@
 {% block content %}
 <div class="row">
     <div class="col-12">
-        <div class="card card-primary">
-            <div class="card-header">
-                <h3 class="card-title">{% if object %}Edit{% else %}Create{% endif %} Hero Slider</h3>
+        <div class="form-card">
+            <!-- Form Header -->
+            <div class="form-header">
+                <h2>
+                    <i class="fas fa-images"></i>
+                    {% if object %}Edit{% else %}Create{% endif %} Hero Slider
+                </h2>
+                <div class="form-actions">
+                    <a href="{% url 'admin_panel:hero_slider_list' %}" class="btn-form btn-form-secondary">
+                        <i class="fas fa-arrow-left"></i> Back to List
+                    </a>
+                </div>
             </div>
-            <form method="post">
+
+            <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                <div class="card-body">
-                    <div class="row">
+                
+                <!-- Form Body -->
+                <div class="form-body">
+                    
+                    <!-- Row 1: Title and Placement -->
+                    <div class="form-row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="{{ form.title.id_for_label }}">Title *</label>
+                                <label for="{{ form.title.id_for_label }}" class="form-label required">
+                                    <i class="fas fa-asterisk"></i> Title
+                                </label>
                                 {{ form.title }}
                                 {% if form.title.errors %}
-                                <div class="text-danger">{{ form.title.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.title.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">Slider title</small>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="{{ form.placement.id_for_label }}">Placement *</label>
+                                <label for="{{ form.placement.id_for_label }}" class="form-label required">
+                                    <i class="fas fa-asterisk"></i> Placement
+                                </label>
                                 {{ form.placement }}
                                 {% if form.placement.errors %}
-                                <div class="text-danger">{{ form.placement.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.placement.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">Where to display this slider</small>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="row">
+                    <!-- Row 2: Genre and Is Active -->
+                    <div class="form-row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="{{ form.genre.id_for_label }}">Genre</label>
+                                <label for="{{ form.genre.id_for_label }}" class="form-label">
+                                    <i class="fas fa-layer-group"></i> Genre
+                                </label>
                                 {{ form.genre }}
                                 {% if form.genre.errors %}
-                                <div class="text-danger">{{ form.genre.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.genre.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">Select a genre to filter content</small>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -49,16 +79,25 @@
                                 <div class="form-check">
                                     {{ form.is_active }}
                                     <label class="form-check-label" for="{{ form.is_active.id_for_label }}">
-                                        Is Active
+                                        <i class="fas fa-toggle-on"></i> Is Active
                                     </label>
                                 </div>
+                                <small class="form-text">Whether this slider is active</small>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="card-footer">
-                    <a href="{% url 'admin_panel:hero_slider_list' %}" class="btn btn-secondary">Cancel</a>
-                    <button type="submit" class="btn btn-primary float-right">Save</button>
+
+                <!-- Form Footer -->
+                <div class="form-footer">
+                    <div class="form-actions">
+                        <a href="{% url 'admin_panel:hero_slider_list' %}" class="btn-form btn-form-secondary">
+                            <i class="fas fa-times"></i> Cancel
+                        </a>
+                        <button type="submit" class="btn-form btn-form-primary">
+                            <i class="fas fa-save"></i> Save Hero Slider
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>

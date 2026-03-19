@@ -6,129 +6,215 @@
 {% block content %}
 <div class="row">
     <div class="col-12">
-        <div class="card card-primary">
-            <div class="card-header">
-                <h3 class="card-title">{% if object %}Edit{% else %}Create{% endif %} Payment</h3>
+        <div class="form-card">
+            <!-- Form Header -->
+            <div class="form-header">
+                <h2>
+                    <i class="fas fa-money-bill-wave"></i>
+                    {% if object %}Edit{% else %}Create{% endif %} Payment
+                </h2>
+                <div class="form-actions">
+                    <a href="{% url 'admin_panel:payment_list' %}" class="btn-form btn-form-secondary">
+                        <i class="fas fa-arrow-left"></i> Back to List
+                    </a>
+                </div>
             </div>
-            <form method="post">
+
+            <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                <div class="card-body">
-                    <div class="row">
+                
+                <!-- Form Body -->
+                <div class="form-body">
+                    
+                    <!-- Row 1: User and Plan -->
+                    <div class="form-row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="{{ form.user.id_for_label }}">User *</label>
+                                <label for="{{ form.user.id_for_label }}" class="form-label required">
+                                    <i class="fas fa-asterisk"></i> User
+                                </label>
                                 {{ form.user }}
                                 {% if form.user.errors %}
-                                <div class="text-danger">{{ form.user.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.user.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">Select the user</small>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="{{ form.plan.id_for_label }}">Plan *</label>
+                                <label for="{{ form.plan.id_for_label }}" class="form-label required">
+                                    <i class="fas fa-asterisk"></i> Plan
+                                </label>
                                 {{ form.plan }}
                                 {% if form.plan.errors %}
-                                <div class="text-danger">{{ form.plan.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.plan.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">Select the subscription plan</small>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="row">
+                    <!-- Row 2: Subscription and Gateway -->
+                    <div class="form-row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="{{ form.subscription.id_for_label }}">Subscription</label>
+                                <label for="{{ form.subscription.id_for_label }}" class="form-label">
+                                    <i class="fas fa-subscription"></i> Subscription
+                                </label>
                                 {{ form.subscription }}
                                 {% if form.subscription.errors %}
-                                <div class="text-danger">{{ form.subscription.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.subscription.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">Select the subscription</small>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="{{ form.gateway.id_for_label }}">Gateway *</label>
+                                <label for="{{ form.gateway.id_for_label }}" class="form-label required">
+                                    <i class="fas fa-asterisk"></i> Gateway
+                                </label>
                                 {{ form.gateway }}
                                 {% if form.gateway.errors %}
-                                <div class="text-danger">{{ form.gateway.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.gateway.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">Payment gateway used</small>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="row">
+                    <!-- Row 3: Gateway Order ID and Gateway Payment ID -->
+                    <div class="form-row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="{{ form.gateway_order_id.id_for_label }}">Gateway Order ID</label>
+                                <label for="{{ form.gateway_order_id.id_for_label }}" class="form-label">
+                                    <i class="fas fa-receipt"></i> Gateway Order ID
+                                </label>
                                 {{ form.gateway_order_id }}
                                 {% if form.gateway_order_id.errors %}
-                                <div class="text-danger">{{ form.gateway_order_id.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.gateway_order_id.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">Order ID from payment gateway</small>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="{{ form.gateway_payment_id.id_for_label }}">Gateway Payment ID</label>
+                                <label for="{{ form.gateway_payment_id.id_for_label }}" class="form-label">
+                                    <i class="fas fa-credit-card"></i> Gateway Payment ID
+                                </label>
                                 {{ form.gateway_payment_id }}
                                 {% if form.gateway_payment_id.errors %}
-                                <div class="text-danger">{{ form.gateway_payment_id.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.gateway_payment_id.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">Payment ID from payment gateway</small>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="row">
+                    <!-- Row 4: Amount and Currency -->
+                    <div class="form-row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="{{ form.amount.id_for_label }}">Amount *</label>
+                                <label for="{{ form.amount.id_for_label }}" class="form-label required">
+                                    <i class="fas fa-asterisk"></i> Amount
+                                </label>
                                 {{ form.amount }}
                                 {% if form.amount.errors %}
-                                <div class="text-danger">{{ form.amount.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.amount.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">Payment amount</small>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="{{ form.currency.id_for_label }}">Currency *</label>
+                                <label for="{{ form.currency.id_for_label }}" class="form-label required">
+                                    <i class="fas fa-asterisk"></i> Currency
+                                </label>
                                 {{ form.currency }}
                                 {% if form.currency.errors %}
-                                <div class="text-danger">{{ form.currency.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.currency.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">Currency code</small>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="row">
+                    <!-- Row 5: Status and Paid At -->
+                    <div class="form-row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="{{ form.status.id_for_label }}">Status *</label>
+                                <label for="{{ form.status.id_for_label }}" class="form-label required">
+                                    <i class="fas fa-asterisk"></i> Status
+                                </label>
                                 {{ form.status }}
                                 {% if form.status.errors %}
-                                <div class="text-danger">{{ form.status.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.status.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">Payment status</small>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="{{ form.paid_at.id_for_label }}">Paid At</label>
+                                <label for="{{ form.paid_at.id_for_label }}" class="form-label">
+                                    <i class="fas fa-clock"></i> Paid At
+                                </label>
                                 {{ form.paid_at }}
                                 {% if form.paid_at.errors %}
-                                <div class="text-danger">{{ form.paid_at.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.paid_at.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">When payment was made</small>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="{{ form.metadata.id_for_label }}">Metadata</label>
-                        {{ form.metadata }}
-                        {% if form.metadata.errors %}
-                        <div class="text-danger">{{ form.metadata.errors }}</div>
-                        {% endif %}
+                    <!-- Row 6: Metadata (full width) -->
+                    <div class="form-row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="{{ form.metadata.id_for_label }}" class="form-label">
+                                    <i class="fas fa-code"></i> Metadata
+                                </label>
+                                {{ form.metadata }}
+                                {% if form.metadata.errors %}
+                                <div class="form-error">
+                                    {{ form.metadata.errors }}
+                                </div>
+                                {% endif %}
+                                <small class="form-text">Additional payment metadata</small>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="card-footer">
-                    <a href="{% url 'admin_panel:payment_list' %}" class="btn btn-secondary">Cancel</a>
-                    <button type="submit" class="btn btn-primary float-right">Save</button>
+
+                <!-- Form Footer -->
+                <div class="form-footer">
+                    <div class="form-actions">
+                        <a href="{% url 'admin_panel:payment_list' %}" class="btn-form btn-form-secondary">
+                            <i class="fas fa-times"></i> Cancel
+                        </a>
+                        <button type="submit" class="btn-form btn-form-primary">
+                            <i class="fas fa-save"></i> Save Payment
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>

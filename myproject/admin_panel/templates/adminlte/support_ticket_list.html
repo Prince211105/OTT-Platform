@@ -1,82 +1,137 @@
 {% extends 'adminlte/base.html' %}
 {% block title %}Support Tickets{% endblock %}
 {% block page_title %}Support Tickets{% endblock %}
-{% block page_subtitle %}Support Ticket List{% endblock %}
+{% block page_subtitle %}Support Ticket Management{% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Support Ticket Management</h3>
-                <div class="card-tools">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h3 class="card-title">
+                        <i class="fas fa-life-ring mr-2 text-primary"></i>Support Ticket Management
+                    </h3>
                     <a href="{% url 'admin_panel:support_ticket_create' %}" class="btn btn-primary">
-                        <i class="fas fa-plus"></i> Add New Ticket
+                        <i class="fas fa-plus mr-1"></i> Add Ticket
                     </a>
                 </div>
             </div>
             <div class="card-body">
-                <table class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th>Subject</th>
-                            <th>User</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Status</th>
-                            <th>Created</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for ticket in support_tickets %}
-                        <tr>
-                            <td>{{ ticket.subject }}</td>
-                            <td>{{ ticket.user.name|default:"-" }}</td>
-                            <td>{{ ticket.name }}</td>
-                            <td>{{ ticket.email }}</td>
-                            <td>
-                                <span class="badge {% if ticket.status == 'open' %}bg-warning{% elif ticket.status == 'in_progress' %}bg-info{% elif ticket.status == 'resolved' %}bg-success{% else %}bg-secondary{% endif %}">
-                                    {{ ticket.get_status_display }}
-                                </span>
-                            </td>
-                            <td>{{ ticket.created_at|date:"Y-m-d" }}</td>
-                            <td>
-                                <a href="{% url 'admin_panel:support_ticket_update' ticket.pk %}" class="btn btn-sm btn-primary">
-                                    <i class="fas fa-edit"></i> Edit
-                                </a>
-                                <a href="{% url 'admin_panel:support_ticket_delete' ticket.pk %}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this ticket?')">
-                                    <i class="fas fa-trash"></i> Delete
-                                </a>
-                            </td>
-                        </tr>
-                        {% empty %}
-                        <tr>
-                            <td colspan="7" class="text-center">No support tickets found.</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th style="width: 20%;">Subject</th>
+                                <th style="width: 15%;">User</th>
+                                <th style="width: 15%;">Name</th>
+                                <th style="width: 18%;">Email</th>
+                                <th style="width: 12%;">Status</th>
+                                <th style="width: 20%;">Created</th>
+                                <th style="width: 20%;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for ticket in support_tickets %}
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-grow-1">
+                                            <strong class="text-primary" style="font-size: 0.9375rem;">
+                                                {{ ticket.subject }}
+                                            </strong>
+                                            <br>
+                                            <small class="text-muted" style="font-size: 0.8125rem;">
+                                                {{ ticket.slug|default:"-" }}
+                                            </small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="text-secondary" style="font-size: 0.875rem;">
+                                        {{ ticket.user.name|default:"-" }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="text-secondary" style="font-size: 0.875rem;">
+                                        {{ ticket.name }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="text-secondary" style="font-size: 0.875rem;">
+                                        {{ ticket.email }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="badge {% if ticket.status == 'open' %}bg-warning{% elif ticket.status == 'in_progress' %}bg-info{% elif ticket.status == 'resolved' %}bg-success{% else %}bg-secondary{% endif %}" style="font-size: 0.75rem; padding: 4px 10px;">
+                                        {{ ticket.get_status_display }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="text-secondary" style="font-size: 0.875rem;">
+                                        {{ ticket.created_at|date:"Y-m-d H:i" }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <a href="{% url 'admin_panel:support_ticket_update' ticket.pk %}" class="btn btn-sm btn-primary" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a href="{% url 'admin_panel:support_ticket_delete' ticket.pk %}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this ticket?')" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="7" class="text-center py-5">
+                                    <div class="empty-state">
+                                        <i class="fas fa-life-ring"></i>
+                                        <h4>No Support Tickets Found</h4>
+                                        <p>Get started by creating your first support ticket.</p>
+                                        <a href="{% url 'admin_panel:support_ticket_create' %}" class="btn btn-primary">
+                                            <i class="fas fa-plus mr-1"></i> Add Your First Ticket
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <div class="card-footer">
-                <div class="d-flex justify-content-between">
-                    <span>Showing {{ support_tickets.start_index|default:0 }} to {{ support_tickets.end_index|default:0 }} of {{ support_tickets.paginator.count }} entries</span>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="text-muted" style="font-size: 0.875rem;">
+                        Showing {{ support_tickets.start_index|default:0 }} to {{ support_tickets.end_index|default:0 }} of {{ support_tickets.paginator.count }} entries
+                    </span>
                     {% if support_tickets.has_other_pages %}
-                    <ul class="pagination pagination-sm m-0">
-                        {% if support_tickets.has_previous %}
-                        <li class="page-item"><a class="page-link" href="?page={{ support_tickets.previous_page_number }}">«</a></li>
-                        {% endif %}
-                        {% for page in support_tickets.paginator.page_range %}
-                            {% if page >= support_tickets.number|add:-2 and page <= support_tickets.number|add:2 %}
-                            <li class="page-item {% if page == support_tickets.number %}active{% endif %}">
-                                <a class="page-link" href="?page={{ page }}">{{ page }}</a>
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination pagination-sm m-0">
+                            {% if support_tickets.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ support_tickets.previous_page_number }}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
                             </li>
                             {% endif %}
-                        {% endfor %}
-                        {% if support_tickets.has_next %}
-                        <li class="page-item"><a class="page-link" href="?page={{ support_tickets.next_page_number }}">»</a></li>
-                        {% endif %}
-                    </ul>
+                            {% for page in support_tickets.paginator.page_range %}
+                                {% if page >= support_tickets.number|add:-2 and page <= support_tickets.number|add:2 %}
+                                <li class="page-item {% if page == support_tickets.number %}active{% endif %}">
+                                    <a class="page-link" href="?page={{ page }}">{{ page }}</a>
+                                </li>
+                                {% endif %}
+                            {% endfor %}
+                            {% if support_tickets.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ support_tickets.next_page_number }}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
                     {% endif %}
                 </div>
             </div>

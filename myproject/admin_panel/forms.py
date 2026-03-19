@@ -129,13 +129,32 @@ class SubscriptionPlanForm(forms.ModelForm):
 
 
 # ========== User Forms ==========
+import uuid
+
 class UserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = [
-            'uuid', 'name', 'email', 'phone', 'avatar', 'status', 'role',
+            'name', 'email', 'phone', 'avatar', 'status', 'role',
             'email_verified_at', 'remember_token', 'deleted_at'
         ]
+        widgets = {
+            'uuid': forms.HiddenInput(),
+        }
+    
+    def clean_uuid(self):
+        uuid_value = self.cleaned_data.get('uuid')
+        if not uuid_value:
+            return str(uuid.uuid4())
+        return uuid_value
+    
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        if not instance.uuid:
+            instance.uuid = str(uuid.uuid4())
+        if commit:
+            instance.save()
+        return instance
 
 
 # ========== Payment Forms ==========

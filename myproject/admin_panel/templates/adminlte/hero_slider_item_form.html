@@ -6,131 +6,208 @@
 {% block content %}
 <div class="row">
     <div class="col-12">
-        <div class="card card-primary">
-            <div class="card-header">
-                <h3 class="card-title">{% if object %}Edit{% else %}Create{% endif %} Hero Slider Item</h3>
+        <div class="form-card">
+            <!-- Form Header -->
+            <div class="form-header">
+                <h2>
+                    <i class="fas fa-image"></i>
+                    {% if object %}Edit{% else %}Create{% endif %} Hero Slider Item
+                </h2>
+                <div class="form-actions">
+                    <a href="{% url 'admin_panel:hero_slider_item_list' %}" class="btn-form btn-form-secondary">
+                        <i class="fas fa-arrow-left"></i> Back to List
+                    </a>
+                </div>
             </div>
-            <form method="post">
+
+            <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                <div class="card-body">
-                    <div class="row">
+                
+                <!-- Form Body -->
+                <div class="form-body">
+                    
+                    <!-- Row 1: Slider and Content -->
+                    <div class="form-row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="{{ form.slider.id_for_label }}">Slider *</label>
+                                <label for="{{ form.slider.id_for_label }}" class="form-label required">
+                                    <i class="fas fa-asterisk"></i> Slider
+                                </label>
                                 {{ form.slider }}
                                 {% if form.slider.errors %}
-                                <div class="text-danger">{{ form.slider.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.slider.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">Select the slider this item belongs to</small>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="{{ form.content.id_for_label }}">Content</label>
+                                <label for="{{ form.content.id_for_label }}" class="form-label">
+                                    <i class="fas fa-film"></i> Content
+                                </label>
                                 {{ form.content }}
                                 {% if form.content.errors %}
-                                <div class="text-danger">{{ form.content.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.content.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">Select the content to display</small>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="row">
+                    <!-- Row 2: Title and Subtitle -->
+                    <div class="form-row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="{{ form.title.id_for_label }}">Title</label>
+                                <label for="{{ form.title.id_for_label }}" class="form-label">
+                                    <i class="fas fa-heading"></i> Title
+                                </label>
                                 {{ form.title }}
                                 {% if form.title.errors %}
-                                <div class="text-danger">{{ form.title.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.title.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">Main title for the item</small>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="{{ form.subtitle.id_for_label }}">Subtitle</label>
+                                <label for="{{ form.subtitle.id_for_label }}" class="form-label">
+                                    <i class="fas fa-align-justify"></i> Subtitle
+                                </label>
                                 {{ form.subtitle }}
                                 {% if form.subtitle.errors %}
-                                <div class="text-danger">{{ form.subtitle.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.subtitle.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">Subtitle for the item</small>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="row">
+                    <!-- Row 3: Background Image and Sort Order -->
+                    <div class="form-row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="{{ form.background_image.id_for_label }}">Background Image URL *</label>
+                                <label for="{{ form.background_image.id_for_label }}" class="form-label required">
+                                    <i class="fas fa-asterisk"></i> Background Image URL
+                                </label>
                                 {{ form.background_image }}
                                 {% if form.background_image.errors %}
-                                <div class="text-danger">{{ form.background_image.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.background_image.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">URL to the background image</small>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="{{ form.sort_order.id_for_label }}">Sort Order *</label>
+                                <label for="{{ form.sort_order.id_for_label }}" class="form-label required">
+                                    <i class="fas fa-asterisk"></i> Sort Order
+                                </label>
                                 {{ form.sort_order }}
                                 {% if form.sort_order.errors %}
-                                <div class="text-danger">{{ form.sort_order.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.sort_order.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">Order in which to display this item</small>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="row">
+                    <!-- Row 4: CTA Text and CTA URL -->
+                    <div class="form-row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="{{ form.cta_text.id_for_label }}">CTA Text</label>
+                                <label for="{{ form.cta_text.id_for_label }}" class="form-label">
+                                    <i class="fas fa-hand-point-right"></i> CTA Text
+                                </label>
                                 {{ form.cta_text }}
                                 {% if form.cta_text.errors %}
-                                <div class="text-danger">{{ form.cta_text.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.cta_text.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">Call-to-action button text</small>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="{{ form.cta_url.id_for_label }}">CTA URL</label>
+                                <label for="{{ form.cta_url.id_for_label }}" class="form-label">
+                                    <i class="fas fa-link"></i> CTA URL
+                                </label>
                                 {{ form.cta_url }}
                                 {% if form.cta_url.errors %}
-                                <div class="text-danger">{{ form.cta_url.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.cta_url.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">Call-to-action button URL</small>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="row">
+                    <!-- Row 5: Is Active, Starts At, Ends At -->
+                    <div class="form-row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <div class="form-check">
                                     {{ form.is_active }}
                                     <label class="form-check-label" for="{{ form.is_active.id_for_label }}">
-                                        Is Active
+                                        <i class="fas fa-toggle-on"></i> Is Active
                                     </label>
                                 </div>
+                                <small class="form-text">Whether this item is active</small>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="{{ form.starts_at.id_for_label }}">Starts At</label>
+                                <label for="{{ form.starts_at.id_for_label }}" class="form-label">
+                                    <i class="fas fa-clock"></i> Starts At
+                                </label>
                                 {{ form.starts_at }}
                                 {% if form.starts_at.errors %}
-                                <div class="text-danger">{{ form.starts_at.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.starts_at.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">When to start showing this item</small>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="{{ form.ends_at.id_for_label }}">Ends At</label>
+                                <label for="{{ form.ends_at.id_for_label }}" class="form-label">
+                                    <i class="fas fa-stopwatch"></i> Ends At
+                                </label>
                                 {{ form.ends_at }}
                                 {% if form.ends_at.errors %}
-                                <div class="text-danger">{{ form.ends_at.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.ends_at.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">When to stop showing this item</small>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="card-footer">
-                    <a href="{% url 'admin_panel:hero_slider_item_list' %}" class="btn btn-secondary">Cancel</a>
-                    <button type="submit" class="btn btn-primary float-right">Save</button>
+
+                <!-- Form Footer -->
+                <div class="form-footer">
+                    <div class="form-actions">
+                        <a href="{% url 'admin_panel:hero_slider_item_list' %}" class="btn-form btn-form-secondary">
+                            <i class="fas fa-times"></i> Cancel
+                        </a>
+                        <button type="submit" class="btn-form btn-form-primary">
+                            <i class="fas fa-save"></i> Save Hero Slider Item
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>

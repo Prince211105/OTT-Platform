@@ -9,7 +9,9 @@
         <div class="card">
             <div class="card-header">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h3 class="card-title"><i class="fas fa-film mr-2"></i>Content Management</h3>
+                    <h3 class="card-title">
+                        <i class="fas fa-film mr-2 text-primary"></i>Content Management
+                    </h3>
                     <a href="{% url 'admin_panel:content_create' %}" class="btn btn-primary">
                         <i class="fas fa-plus mr-1"></i> Add Content
                     </a>
@@ -17,46 +19,73 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-hover table-striped">
-                        <thead class="thead-light">
+                    <table class="table table-hover">
+                        <thead>
                             <tr>
-                                <th>Title</th>
-                                <th>Type</th>
-                                <th>Rating</th>
-                                <th>Status</th>
-                                <th>Release Year</th>
-                                <th>View Count</th>
-                                <th>Featured</th>
-                                <th>Free</th>
-                                <th>Actions</th>
+                                <th style="width: 25%;">Title</th>
+                                <th style="width: 10%;">Type</th>
+                                <th style="width: 8%;">Rating</th>
+                                <th style="width: 10%;">Status</th>
+                                <th style="width: 8%;">Year</th>
+                                <th style="width: 8%;">Views</th>
+                                <th style="width: 8%;">Featured</th>
+                                <th style="width: 8%;">Free</th>
+                                <th style="width: 15%;">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for content in contents %}
                             <tr>
                                 <td>
-                                    <strong>{{ content.title }}</strong>
-                                    <br><small class="text-muted">{{ content.slug }}</small>
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-grow-1">
+                                            <strong class="text-primary" style="font-size: 0.9375rem;">
+                                                {{ content.title }}
+                                            </strong>
+                                            <br>
+                                            <small class="text-muted" style="font-size: 0.8125rem;">
+                                                {{ content.slug }}
+                                            </small>
+                                        </div>
+                                    </div>
                                 </td>
                                 <td>
-                                    <span class="badge bg-info">{{ content.get_content_type_display }}</span>
+                                    <span class="badge bg-info" style="font-size: 0.75rem; padding: 4px 10px;">
+                                        {{ content.get_content_type_display }}
+                                    </span>
                                 </td>
-                                <td>{{ content.get_rating_display|default:"-" }}</td>
                                 <td>
-                                    <span class="badge {% if content.status == 'published' %}bg-success{% elif content.status == 'draft' %}bg-secondary{% elif content.status == 'archived' %}bg-dark{% else %}bg-warning{% endif %}">
+                                    <span class="text-secondary" style="font-size: 0.875rem;">
+                                        {{ content.get_rating_display|default:"-" }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="badge {% if content.status == 'published' %}bg-success{% elif content.status == 'draft' %}bg-secondary{% elif content.status == 'archived' %}bg-dark{% else %}bg-warning{% endif %}" style="font-size: 0.75rem; padding: 4px 10px;">
                                         {{ content.get_status_display }}
                                     </span>
                                 </td>
-                                <td>{{ content.release_year|default:"-" }}</td>
-                                <td>{{ content.view_count }}</td>
+                                <td>
+                                    <span class="text-secondary" style="font-size: 0.875rem;">
+                                        {{ content.release_year|default:"-" }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="text-secondary" style="font-size: 0.875rem;">
+                                        {{ content.view_count|default:"0" }}
+                                    </span>
+                                </td>
                                 <td>
                                     {% if content.is_featured %}
-                                    <i class="fas fa-star text-warning" title="Featured"></i>
+                                    <i class="fas fa-star text-warning" title="Featured Content"></i>
+                                    {% else %}
+                                    <i class="fas fa-star text-muted" style="opacity: 0.3;" title="Not Featured"></i>
                                     {% endif %}
                                 </td>
                                 <td>
                                     {% if content.is_free %}
-                                    <i class="fas fa-free-code-camp text-success" title="Free"></i>
+                                    <i class="fas fa-free-code-camp text-success" title="Free Content"></i>
+                                    {% else %}
+                                    <i class="fas fa-lock text-muted" style="opacity: 0.3;" title="Premium Content"></i>
                                     {% endif %}
                                 </td>
                                 <td>
@@ -72,9 +101,14 @@
                             </tr>
                             {% empty %}
                             <tr>
-                                <td colspan="9" class="text-center py-4">
-                                    <div class="alert alert-info">
-                                        <i class="fas fa-info-circle mr-2"></i>No contents found. <a href="{% url 'admin_panel:content_create' %}" class="alert-link">Add your first content</a>.
+                                <td colspan="9" class="text-center py-5">
+                                    <div class="empty-state">
+                                        <i class="fas fa-film"></i>
+                                        <h4>No Contents Found</h4>
+                                        <p>Get started by creating your first content item.</p>
+                                        <a href="{% url 'admin_panel:content_create' %}" class="btn btn-primary">
+                                            <i class="fas text-black-50 fa-plus mr-1"></i> Add Your First Content
+                                        </a>
                                     </div>
                                 </td>
                             </tr>
@@ -85,7 +119,9 @@
             </div>
             <div class="card-footer">
                 <div class="d-flex justify-content-between align-items-center">
-                    <span class="text-muted">Showing {{ contents.start_index|default:0 }} to {{ contents.end_index|default:0 }} of {{ contents.paginator.count }} entries</span>
+                    <span class="text-muted" style="font-size: 0.875rem;">
+                        Showing {{ contents.start_index|default:0 }} to {{ contents.end_index|default:0 }} of {{ contents.paginator.count }} entries
+                    </span>
                     {% if contents.has_other_pages %}
                     <nav aria-label="Page navigation">
                         <ul class="pagination pagination-sm m-0">

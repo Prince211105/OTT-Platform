@@ -6,74 +6,137 @@
 {% block content %}
 <div class="row">
     <div class="col-12">
-        <div class="card card-primary">
-            <div class="card-header">
-                <h3 class="card-title">{% if object %}Edit{% else %}Create{% endif %} Support Ticket</h3>
+        <div class="form-card">
+            <!-- Form Header -->
+            <div class="form-header">
+                <h2>
+                    <i class="fas fa-life-ring"></i>
+                    {% if object %}Edit{% else %}Create{% endif %} Support Ticket
+                </h2>
+                <div class="form-actions">
+                    <a href="{% url 'admin_panel:support_ticket_list' %}" class="btn-form btn-form-secondary">
+                        <i class="fas fa-arrow-left"></i> Back to List
+                    </a>
+                </div>
             </div>
-            <form method="post">
+
+            <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                <div class="card-body">
-                    <div class="row">
+                
+                <!-- Form Body -->
+                <div class="form-body">
+                    
+                    <!-- Row 1: User and Name -->
+                    <div class="form-row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="{{ form.user.id_for_label }}">User</label>
+                                <label for="{{ form.user.id_for_label }}" class="form-label">
+                                    <i class="fas fa-users"></i> User
+                                </label>
                                 {{ form.user }}
                                 {% if form.user.errors %}
-                                <div class="text-danger">{{ form.user.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.user.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">Select the user (optional)</small>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="{{ form.name.id_for_label }}">Name *</label>
+                                <label for="{{ form.name.id_for_label }}" class="form-label required">
+                                    <i class="fas fa-asterisk"></i> Name
+                                </label>
                                 {{ form.name }}
                                 {% if form.name.errors %}
-                                <div class="text-danger">{{ form.name.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.name.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">Submitter's name</small>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="row">
+                    <!-- Row 2: Email and Subject -->
+                    <div class="form-row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="{{ form.email.id_for_label }}">Email *</label>
+                                <label for="{{ form.email.id_for_label }}" class="form-label required">
+                                    <i class="fas fa-asterisk"></i> Email
+                                </label>
                                 {{ form.email }}
                                 {% if form.email.errors %}
-                                <div class="text-danger">{{ form.email.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.email.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">Submitter's email address</small>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="{{ form.subject.id_for_label }}">Subject *</label>
+                                <label for="{{ form.subject.id_for_label }}" class="form-label required">
+                                    <i class="fas fa-asterisk"></i> Subject
+                                </label>
                                 {{ form.subject }}
                                 {% if form.subject.errors %}
-                                <div class="text-danger">{{ form.subject.errors }}</div>
+                                <div class="form-error">
+                                    {{ form.subject.errors }}
+                                </div>
                                 {% endif %}
+                                <small class="form-text">Ticket subject</small>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="{{ form.message.id_for_label }}">Message *</label>
-                        {{ form.message }}
-                        {% if form.message.errors %}
-                        <div class="text-danger">{{ form.message.errors }}</div>
-                        {% endif %}
+                    <!-- Row 3: Message (full width) -->
+                    <div class="form-row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="{{ form.message.id_for_label }}" class="form-label required">
+                                    <i class="fas fa-asterisk"></i> Message
+                                </label>
+                                {{ form.message }}
+                                {% if form.message.errors %}
+                                <div class="form-error">
+                                    {{ form.message.errors }}
+                                </div>
+                                {% endif %}
+                                <small class="form-text">Ticket message content</small>
+                            </div>
+                        </div>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="{{ form.status.id_for_label }}">Status *</label>
-                        {{ form.status }}
-                        {% if form.status.errors %}
-                        <div class="text-danger">{{ form.status.errors }}</div>
-                        {% endif %}
+                    <!-- Row 4: Status -->
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.status.id_for_label }}" class="form-label required">
+                                    <i class="fas fa-asterisk"></i> Status
+                                </label>
+                                {{ form.status }}
+                                {% if form.status.errors %}
+                                <div class="form-error">
+                                    {{ form.status.errors }}
+                                </div>
+                                {% endif %}
+                                <small class="form-text">Ticket status</small>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="card-footer">
-                    <a href="{% url 'admin_panel:support_ticket_list' %}" class="btn btn-secondary">Cancel</a>
-                    <button type="submit" class="btn btn-primary float-right">Save</button>
+
+                <!-- Form Footer -->
+                <div class="form-footer">
+                    <div class="form-actions">
+                        <a href="{% url 'admin_panel:support_ticket_list' %}" class="btn-form btn-form-secondary">
+                            <i class="fas fa-times"></i> Cancel
+                        </a>
+                        <button type="submit" class="btn-form btn-form-primary">
+                            <i class="fas fa-save"></i> Save Support Ticket
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>
